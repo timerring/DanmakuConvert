@@ -135,9 +135,10 @@ def render_superchat(ass_file, data):
     for i, (start, end, sc_height, user_name, price, text, btm_box_height, result) in enumerate(data):
         print(f"\nSC {i} ({start}-{end}):")
         # Initial y coordinate
+        previous_y = 1280
         current_y = 1280 - sc_height
-        print(f"Time {start}: y = {current_y}")
         current_time = start
+        print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
 
         # if the position has changed
         if result:
@@ -148,15 +149,16 @@ def render_superchat(ass_file, data):
                 current_time = float(time)
                 # the shift height
                 height_change = float(delta_y[1:])
-                SuperChat(prev_time, current_time, user_name, price, btm_box_height, current_y, text).write_superchat(ass_file)
+                SuperChat(prev_time, current_time, user_name, price, btm_box_height, current_y, previous_y, text).write_superchat(ass_file)
+                previous_y = current_y
                 if delta_y[0] == '-':
                     current_y -= height_change
                 else:
                     current_y += height_change
-                print(f"Time {time}: y = {current_y}")
+                print(f"Time {time}: y = {current_y}, previous_y = {previous_y}")
         prev_time = current_time
         current_time = end
-        SuperChat(prev_time, current_time, user_name, price, btm_box_height, current_y, text).write_superchat(ass_file)
+        SuperChat(prev_time, current_time, user_name, price, btm_box_height, current_y, previous_y, text).write_superchat(ass_file)
 
 def draw_ass_header(ass_file, resolution_x, resolution_y, font_size):
     # Write ASS header
