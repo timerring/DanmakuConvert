@@ -13,7 +13,8 @@ def extract_gift_data(element):
         'move': 0,
         'height': 0,
         'move_time': -1,
-        'disappear_time': -2
+        'disappear_time': -2,
+        'isdis': 0 
     }
     return data
 
@@ -40,9 +41,10 @@ def merge_gifts(giftlist, merge_interval=5):
     merged.append(current)
     return merged
 
-def adjust_time_conflicts(gifts, max_overlap=5, interval=0.2):
+def adjust_time_conflicts(gifts, max_overlap=3, interval=0.4):
     """
         handle the gift danmaku with the same time, avoid overlapping by interval
+        s.t. (max_overlap-1)*interval < 1
     
     Args:
         max_overlap: the max number of the same time gift danmaku
@@ -96,6 +98,7 @@ def calculate_moves(gifts):
                     gift['move_time'] = time
                 elif gift['move'] == 2:
                     gift['disappear_time'] = time
+                    gift['isdis'] = 1
                     
             # add the new active item
             active.append(idx)
@@ -109,17 +112,27 @@ def calculate_moves(gifts):
                 
     return gifts
 
-def print_gift_2_ass(start_time,end_time,height,gift_user,giftname_out):
+def print_gift_2_ass(actionStr,start_time,end_time,height,gift_user,giftname,resolution_y,font_size):
     # gift danmakus print to ass
     layer = 0
     style = "message_box"
     
-    effect_stay = f"\\pos(100,{height})"
-    line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect_stay}}}{gift_user}{giftname_out}\n"
+    pos_x = 0 # left side
+    if(actionStr == "disappear"):
+        # 使用矩形蒙版
+        effect = f"\\move({pos_x},{height+font_size},{pos_x},{height})\\clip(0,{height+font_size},700,{resolution_y},)"
+    if(actionStr == "move"):
+        effect = f"\\{actionStr}({pos_x},{height+font_size},{pos_x},{height})"
+    elif(actionStr == "pos"):
+        effect = f"\\{actionStr}({pos_x},{height})"
+
+    line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect}}}{gift_user}{giftname}\n"
     return line
 
 def generate_ass_line(gift, resolution_y, font_size):
     """generate a single ASS line"""
+    animation_time = 0.2  # the time of gift danmaku moving
+    # 应该保持动画时间，不大于之前分的相同开始时间的分开间隔 之前设置的是0.2,1秒最多5个
    
     appear_time = gift['appear_time']
     over_time = gift['over_time']
@@ -133,22 +146,33 @@ def generate_ass_line(gift, resolution_y, font_size):
 
     color_text = get_color(int(gift['price']))[2]
     gift_user = f"{{{color_text}\\b1}}{gift['user']}:{{{color_text}\\b0}}"
-    giftname_out = f"{gift['name']} x{gift['count']}"
+    giftname = f"{gift['name']} x{gift['count']}"
+
+    start_time_next = format_time(appear_time+animation_time)
+    end_time_next = format_time(over_time+animation_time)
+    mid_time_next = format_time(move_time+animation_time)
+    dis_time_next = format_time(disappear_time+animation_time)
         
     move_status = gift['move']  # the number of moves
-    
+
+   
     # one move, the upper one disappears earlier
     if move_status == 2:
-        line0 = print_gift_2_ass(start_time,mid_time,resolution_y-1*font_size,gift_user,giftname_out)
-        line1 = print_gift_2_ass(mid_time,dis_time,resolution_y-2*font_size,gift_user,giftname_out)
-
-        return (line0 + line1)
+        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,mid_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line2 = print_gift_2_ass('move',mid_time,mid_time_next,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
+        line3 = print_gift_2_ass('pos',mid_time_next,dis_time,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
+        line4 = print_gift_2_ass('disappear',dis_time,dis_time_next,resolution_y-3*font_size,gift_user,giftname,resolution_y,font_size)
+        return (line0 + line1+line2+line3+line4)
     # one move, the upper one does not disappear earlier
     elif move_status == 1:
-        line0 = print_gift_2_ass(start_time,mid_time,resolution_y-1*font_size,gift_user,giftname_out)
-        line1 = print_gift_2_ass(mid_time,end_time,resolution_y-2*font_size,gift_user,giftname_out)
-        return (line0 + line1)
+        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,mid_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line2 = print_gift_2_ass('move',mid_time,mid_time_next,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
+        line3 = print_gift_2_ass('pos',mid_time_next,end_time,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
+        return (line0 + line1+line2+line3)
     # one move
     elif move_status == 0:
-        line = print_gift_2_ass(start_time,end_time,resolution_y-1*font_size,gift_user,giftname_out)
-        return line
+        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,end_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        return (line0 + line1)

@@ -35,8 +35,8 @@
     <gift ts="15.00" uid="0" user="另六个人" giftname="心动盲盒" giftcount="1" cointype="金瓜子" price="15000"/>
 
     <guard ts="18.000" uid="873268" user="schenl" giftname="舰长" count="1" price="198000" level="3"/>
-    <guard ts="19.000" uid="873268" user="schenl" giftname="提督" count="1" price="1998000" level="2"/>
-    <guard ts="20.000" uid="873268" user="schenl" giftname="总督" count="1" price="19998000" level="1  "/>
+    <guard ts="18.000" uid="873268" user="schenl" giftname="提督" count="1" price="1998000" level="2"/>
+    <guard ts="18.000" uid="873268" user="schenl" giftname="总督" count="1" price="19998000" level="1  "/>
 
     <d p="0.000,1,25,16777215,1741787673905,0,486e53d6,547449165" uid="0" user="西***">峰哥今天好帅啊</d>
     <d p="0.000,1,25,5816798,1741787674126,0,e9bc62e4,1741784326" uid="0" user="兴***">再P一个</d>
