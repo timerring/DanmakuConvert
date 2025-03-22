@@ -15,29 +15,23 @@
         <parent_area>生活</parent_area>
         <live_start_time>2025-03-12T20:40:51+08:00</live_start_time>
         <record_start_time>2025-03-12T21:54:41+08:00</record_start_time>
-        <recorder>blrec v1.15.0 https://github.com/acgnhiki/blrec</recorder>
     </metadata>
 
     <gift ts="0.00" uid="0" user="一" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
-   
     <gift ts="3.00" uid="0" user="二" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
     <gift ts="5.00" uid="0" user="三" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
     <gift ts="7.00" uid="0" user="三" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
-   
     <gift ts="8.00" uid="0" user="四" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
     <gift ts="9.00" uid="0" user="五" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
-
     <gift ts="11.00" uid="0" user="另一个人" giftname="情书" giftcount="1" cointype="金瓜子" price="5200"/>
     <gift ts="14.00" uid="0" user="另二个人" giftname="粉丝团灯牌" giftcount="1" cointype="金瓜子" price="100"/>
     <gift ts="15.00" uid="0" user="另三个人" giftname="小花花" giftcount="1" cointype="金瓜子" price="100"/>
     <gift ts="15.00" uid="0" user="另四个人" giftname="这个好诶" giftcount="1" cointype="金瓜子" price="1000"/>
     <gift ts="15.00" uid="0" user="另五个人" giftname="心动盲盒" giftcount="1" cointype="金瓜子" price="15000"/>
     <gift ts="15.00" uid="0" user="另六个人" giftname="心动盲盒" giftcount="1" cointype="金瓜子" price="15000"/>
-
     <guard ts="18.000" uid="873268" user="schenl" giftname="舰长" count="1" price="198000" level="3"/>
     <guard ts="18.000" uid="873268" user="schenl" giftname="提督" count="1" price="1998000" level="2"/>
     <guard ts="18.000" uid="873268" user="schenl" giftname="总督" count="1" price="19998000" level="1  "/>
-
     <d p="0.000,1,25,16777215,1741787673905,0,486e53d6,547449165" uid="0" user="西***">峰哥今天好帅啊</d>
     <d p="0.000,1,25,5816798,1741787674126,0,e9bc62e4,1741784326" uid="0" user="兴***">再P一个</d>
     <d p="0.000,1,25,65532,1741787675288,0,654d4541,1741783493" uid="0" user="一***">哈哈哈</d>
