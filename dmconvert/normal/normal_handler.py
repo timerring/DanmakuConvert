@@ -1,7 +1,7 @@
 # Copyright (c) 2025 DanmakuConvert
 
 from .danmaku_array import DanmakuArray
-from ..utils import format_time, get_str_len
+from ..utils import format_time, get_str_len, remove_emojis
 
 # R2L danmaku algorithm
 def get_position_y(font_size, appear_time, text_length, resolution_x, roll_time, array):
@@ -79,7 +79,7 @@ def draw_normal_danmaku(ass_file, root, font_size, roll_array, btm_array, resolu
             start_time = format_time(appear_time)
             
             # Format text
-            text = d.text
+            text = remove_emojis(d.text)
             
             # For rolling danmakus (most common type)
             if danmaku_type == 1:
