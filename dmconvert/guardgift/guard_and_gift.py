@@ -2,24 +2,6 @@
 
 from ..utils import format_time, get_color
 
-def extract_gift_data(element):
-    """extract the common attributes of gifts and guards"""
-    fixed_time = 2 # the time of gift danmaku
-    data = {
-        'appear_time': float(element.get('ts')),
-        'over_time': float(element.get('ts')) + fixed_time,  
-        'user': element.get('user'),
-        'name': element.get('giftname'),
-        'count': int(element.get('giftcount' if element.tag=='gift' else 'count')), 
-        'price': element.get('price'),
-        'move': 0,
-        'height': 0,
-        'move_time': -1,
-        'disappear_time': -2,
-        'isdis': 0 
-    }
-    return data
-
 def merge_gifts(giftlist, merge_interval=5):
     """merge the same user, same gift and the time interval is less than 5 seconds"""
     if not giftlist:
@@ -121,7 +103,7 @@ def print_gift_2_ass(actionStr,start_time,end_time,height,gift_user,giftname,res
     
     pos_x = 0 # left side
     if(actionStr == "disappear"):
-        # 使用矩形蒙版
+        # Use a rectangle mask
         effect = f"\\move({pos_x},{height+font_size},{pos_x},{height})\\clip(0,{height+font_size},700,{resolution_y},)"
     if(actionStr == "move"):
         effect = f"\\{actionStr}({pos_x},{height+font_size},{pos_x},{height})"
@@ -133,8 +115,8 @@ def print_gift_2_ass(actionStr,start_time,end_time,height,gift_user,giftname,res
 
 def generate_ass_line(gift, resolution_y, font_size):
     """generate a single ASS line"""
+    # The animation time should be kept, not greater than the previous merge_interval of the same start time
     animation_time = 0.2  # the time of gift danmaku moving
-    # 应该保持动画时间，不大于之前分的相同开始时间的分开间隔 之前设置的是0.2,1秒最多5个
    
     appear_time = gift['appear_time']
     over_time = gift['over_time']
