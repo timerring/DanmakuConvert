@@ -17,7 +17,7 @@ def convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file
     draw_ass_header(ass_file, resolution_x, resolution_y, font_size)
     draw_normal_danmaku(ass_file, root, font_size, roll_array, btm_array, resolution_x, resolution_y)
     draw_gift_and_guard(ass_file, root, font_size, resolution_y)
-    draw_superchat(ass_file, root)
+    draw_superchat(ass_file, font_size, resolution_y, root)
 
 if __name__ == "__main__":
     xml_file = "sample.xml"

@@ -25,7 +25,7 @@ def get_sc_height(line_num, sc_font_size=38):
     sc_height = btm_box_height + top_box_height
     return sc_height, top_box_height, btm_box_height
 
-def draw_superchat(ass_file, root):
+def draw_superchat(ass_file, font_size, resolution_y, root):
     sc_list = []
     for sc in root.findall('.//sc'):
         appear_time = float(sc.get('ts'))
@@ -38,9 +38,9 @@ def draw_superchat(ass_file, root):
         process = ""
         sc_list.append([appear_time, disapper_time, sc_height, user_name, price, processed_text, btm_box_height, process])
     
-    render_superchat(ass_file, sc_list)
+    render_superchat(ass_file, font_size, resolution_y, sc_list)
 
-def render_superchat(ass_file, data):
+def render_superchat(ass_file, font_size, resolution_y, data):
     # get all events
     events = []
     for i, (start, end, sc_height, user_name, price, text, btm_box_height, process_record) in enumerate(data):
@@ -79,8 +79,8 @@ def render_superchat(ass_file, data):
     for i, (start, end, sc_height, user_name, price, text, btm_box_height, result) in enumerate(data):
         print(f"\nSC {i} ({start}-{end}):")
         # Initial y coordinate
-        previous_y = 1280
-        current_y = 1280 - sc_height
+        previous_y = resolution_y - font_size * 2
+        current_y = previous_y - sc_height
         current_time = start
         print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
 
