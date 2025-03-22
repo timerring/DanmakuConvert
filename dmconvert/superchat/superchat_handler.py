@@ -7,12 +7,12 @@ def get_text_line_num(text):
     line_num = 1
     result_text = text
     
-    if len(text) > 10:
+    if len(text) > 15:
         result_text = ''
-        for i in range(0, len(text), 10):
-            chunk = text[i:i+10]
+        for i in range(0, len(text), 15):
+            chunk = text[i:i+15]
             result_text += chunk
-            if i + 10 < len(text):
+            if i + 15 < len(text):
                 result_text += "\\N"
                 line_num += 1
     
