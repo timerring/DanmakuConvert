@@ -82,8 +82,7 @@ def calculate_moves(gifts):
                     gift['move_time'] = time
                 elif gift['move'] == 2:
                     gift['disappear_time'] = time
-                    gift['isdis'] = 1
-                    
+
             # add the new active item
             active.append(idx)
             if len(active) > max_layers:
@@ -93,24 +92,24 @@ def calculate_moves(gifts):
         else:  # end event
             if idx in active:
                 active.remove(idx)
-                
     return gifts
 
-def print_gift_2_ass(actionStr,start_time,end_time,height,gift_user,giftname,resolution_y,font_size):
+def print_gift_2_ass(actionStr,start_time,end_time,height_num,gift_str,resolution_y,font_size):
     # gift danmakus print to ass
     layer = 0
     style = "message_box"
-    
     pos_x = 0 # left side
+    height = resolution_y - height_num * font_size
+
     if(actionStr == "disappear"):
         # Use a rectangle mask
-        effect = f"\\move({pos_x},{height+font_size},{pos_x},{height})\\clip(0,{height+font_size},700,{resolution_y},)"
+        effect = f"\\move({pos_x},{height+font_size},{pos_x},{height})\\clip(0,{resolution_y-font_size*2},700,{resolution_y},)"
     if(actionStr == "move"):
-        effect = f"\\{actionStr}({pos_x},{height+font_size},{pos_x},{height})"
+        effect = f"\\move({pos_x},{height+font_size},{pos_x},{height})"
     elif(actionStr == "pos"):
-        effect = f"\\{actionStr}({pos_x},{height})"
+        effect = f"\\pos({pos_x},{height})"
 
-    line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect}}}{gift_user}{giftname}\n"
+    line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect}}}{gift_str}\n"
     return line
 
 def generate_ass_line(gift, resolution_y, font_size):
@@ -129,8 +128,8 @@ def generate_ass_line(gift, resolution_y, font_size):
     dis_time = format_time(disappear_time)
 
     color_text = get_color(int(gift['price']))[2]
-    gift_user = f"{{{color_text}\\b1}}{gift['user']}:{{{color_text}\\b0}}"
-    giftname = f"{gift['name']} x{gift['count']}"
+    gift_str = f"{{{color_text}\\b1}}{gift['user']}:{{{color_text}\\b0}} {gift['name']} x{gift['count']}"
+    # giftname = f"{gift['name']} x{gift['count']}"
 
     start_time_next = format_time(appear_time+animation_time)
     end_time_next = format_time(over_time+animation_time)
@@ -142,21 +141,21 @@ def generate_ass_line(gift, resolution_y, font_size):
    
     # one move, the upper one disappears earlier
     if move_status == 2:
-        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
-        line1 = print_gift_2_ass('pos',start_time_next,mid_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
-        line2 = print_gift_2_ass('move',mid_time,mid_time_next,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
-        line3 = print_gift_2_ass('pos',mid_time_next,dis_time,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
-        line4 = print_gift_2_ass('disappear',dis_time,dis_time_next,resolution_y-3*font_size,gift_user,giftname,resolution_y,font_size)
+        line0 = print_gift_2_ass('move',start_time,start_time_next,1,gift_str,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,mid_time,1,gift_str,resolution_y,font_size)
+        line2 = print_gift_2_ass('move',mid_time,mid_time_next,2,gift_str,resolution_y,font_size)
+        line3 = print_gift_2_ass('pos',mid_time_next,dis_time,2,gift_str,resolution_y,font_size)
+        line4 = print_gift_2_ass('disappear',dis_time,dis_time_next,3,gift_str,resolution_y,font_size)
         return (line0 + line1+line2+line3+line4)
     # one move, the upper one does not disappear earlier
     elif move_status == 1:
-        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
-        line1 = print_gift_2_ass('pos',start_time_next,mid_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
-        line2 = print_gift_2_ass('move',mid_time,mid_time_next,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
-        line3 = print_gift_2_ass('pos',mid_time_next,end_time,resolution_y-2*font_size,gift_user,giftname,resolution_y,font_size)
+        line0 = print_gift_2_ass('move',start_time,start_time_next,1,gift_str,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,mid_time,1,gift_str,resolution_y,font_size)
+        line2 = print_gift_2_ass('move',mid_time,mid_time_next,2,gift_str,resolution_y,font_size)
+        line3 = print_gift_2_ass('pos',mid_time_next,end_time,2,gift_str,resolution_y,font_size)
         return (line0 + line1+line2+line3)
     # one move
     elif move_status == 0:
-        line0 = print_gift_2_ass('move',start_time,start_time_next,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
-        line1 = print_gift_2_ass('pos',start_time_next,end_time,resolution_y-1*font_size,gift_user,giftname,resolution_y,font_size)
+        line0 = print_gift_2_ass('move',start_time,start_time_next,1,gift_str,resolution_y,font_size)
+        line1 = print_gift_2_ass('pos',start_time_next,end_time,1,gift_str,resolution_y,font_size)
         return (line0 + line1)

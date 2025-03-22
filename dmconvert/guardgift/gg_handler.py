@@ -15,8 +15,7 @@ def extract_gift_data(element):
         'move': 0,
         'height': 0,
         'move_time': -1,
-        'disappear_time': -2,
-        'isdis': 0 
+        'disappear_time': -2
     }
     return data
 
