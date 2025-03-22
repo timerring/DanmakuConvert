@@ -1,4 +1,6 @@
-from utils import format_time, get_color
+# Copyright (c) 2025 DanmakuConvert
+
+from ..utils import format_time, get_color
 
 def extract_gift_data(element):
     """extract the common attributes of gifts and guards"""

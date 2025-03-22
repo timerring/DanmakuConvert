@@ -1,3 +1,4 @@
+# Copyright (c) 2025 DanmakuConvert
 
 def format_time(seconds):
     """Convert seconds to ASS time format (H:MM:SS.cc)"""

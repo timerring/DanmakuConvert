@@ -1,5 +1,7 @@
+# Copyright (c) 2025 DanmakuConvert
+
 import math
-from utils import format_time, get_color
+from ..utils import format_time, get_color
 
 
 class SuperChat:

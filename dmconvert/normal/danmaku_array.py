@@ -1,3 +1,6 @@
+# Copyright (c) 2025 DanmakuConvert
+
+
 class DanmakuArray:
     def __init__(self, solution_x=1920, solution_y=1080, font_size=38):
         """
