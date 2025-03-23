@@ -380,3 +380,4 @@ settings-production.toml
 *.xml
 !sample.xml
 DanmakuFactory
+dist/*
