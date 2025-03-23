@@ -3,13 +3,12 @@
     <source media="(prefers-color-scheme: dark)" srcset="assets/headerDark.svg" />
     <img src="assets/headerLight.svg" alt="dmconvert" />
   </picture>
-</div>
-
-# DanmakuConvert
 
 [English](./README.md) | 简体中文
 
 这是一个 Python 版本算法优化过的 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory), 可以将 XML 弹幕转换为 ASS 弹幕。
+
+</div>
 
 ## 功能特性
 

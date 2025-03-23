@@ -3,15 +3,14 @@
     <source media="(prefers-color-scheme: dark)" srcset="assets/headerDark.svg" />
     <img src="assets/headerLight.svg" alt="dmconvert" />
   </picture>
-</div>
-
-# DanmakuConvert
 
 English | [简体中文](./README-zh.md)
 
 Convert XML danmaku to ASS danmaku.
 
 The python implementation of the [DanmakuFactory](https://github.com/hihkm/DanmakuFactory).
+
+</div>
 
 ## Features
 
