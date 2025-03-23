@@ -17,6 +17,10 @@ The python implementation of the [DanmakuFactory](https://github.com/hihkm/Danma
 - Support some persistence preset parameter sets.(WIP)
 - More features will be added in the future, if you have any suggestions, welcome to [open an issue](https://github.com/timerring/DanmakuConvert/issues).
 
+## The result display
+
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
+
 ## Installation
 
 ```bash
@@ -29,7 +33,12 @@ pip install dmconvert
 
 ```bash
 dmconvert -i sample.xml
+```
 
+More details:
+
+```bash
+dmconvert -h
 # usage: dmconvert [-h] [-V] [-f FONTSIZE] [-x RESOLUTIONX] [-y RESOLUTIONY] -i XML [-o ASS]
 # The Python toolkit package and cli designed for convert danmaku to ass.
 # options:
@@ -58,10 +67,6 @@ from dmconvert.convert import convert_xml_to_ass
 # resolution_y = 1280
 convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 ```
-
-## The result display
-
-![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
 
 ## The implementation algorithm
 
