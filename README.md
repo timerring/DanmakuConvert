@@ -1,5 +1,7 @@
 # DanmakuConvert
 
+English | [简体中文](./README-zh.md)
+
 Convert XML danmaku to ASS danmaku.
 
 The python implementation of the [DanmakuFactory](https://github.com/hihkm/DanmakuFactory).
