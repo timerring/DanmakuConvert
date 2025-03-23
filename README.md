@@ -59,6 +59,10 @@ from dmconvert.convert import convert_xml_to_ass
 convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 ```
 
+## The result display
+
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-05-24.png)
+
 ## The implementation algorithm
 
 This article presents a comprehensive implementation of a danmaku rendering algorithm from the ground up, along with a thorough analysis of the danmaku rendering algorithm. The source code is available on [GitHub](https://github.com/timerring/DanmakuConvert).
@@ -653,10 +657,6 @@ The key points to note are:
 4. Danmaku display and movement transition
    - Danmaku movement transition: leave a transition time before each `\pos()`, for smooth transition from the previous position to the current `\pos()` position. This transition time can be configured.
    - For danmaku that exceeds the display range, add a mask `\clip()` when it is removed, so that the danmaku only displays the content within the mask. The height of the mask should be equal to the display box height, or twice the font size.
-
-## The result display
-
-![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-05-24.png)
 
 ## Reference
 
