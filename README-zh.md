@@ -1,3 +1,10 @@
+<div align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="assets/headerDark.svg" />
+    <img src="assets/headerLight.svg" alt="dmconvert" />
+  </picture>
+</div>
+
 # DanmakuConvert
 
 [English](./README.md) | 简体中文
