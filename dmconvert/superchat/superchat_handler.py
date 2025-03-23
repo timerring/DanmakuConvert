@@ -123,12 +123,12 @@ def render_superchat(ass_file, font_size, resolution_y, data):
         btm_box_height,
         result,
     ) in enumerate(data):
-        print(f"\nSC {i} ({start}-{end}):")
+        # print(f"\nSC {i} ({start}-{end}):")
         # Initial y coordinate
         previous_y = resolution_y - font_size * 2
         current_y = previous_y - sc_height
         current_time = start
-        print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
+        # print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
 
         # if the position has changed
         if result:
@@ -154,7 +154,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
                     current_y -= height_change
                 else:
                     current_y += height_change
-                print(f"Time {time}: y = {current_y}, previous_y = {previous_y}")
+                # print(f"Time {time}: y = {current_y}, previous_y = {previous_y}")
         prev_time = current_time
         current_time = end
         SuperChat(

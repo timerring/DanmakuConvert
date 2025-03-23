@@ -2,7 +2,7 @@
 
 将XML弹幕转换为ASS弹幕。
 
-这是 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory) 的Python实现。
+这是一个 Python 版本的 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory)。
 
 ## 功能特性
 
@@ -19,7 +19,7 @@
 
 ## 转换结果展示
 
-![示例图片](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
 
 ## 安装
 
