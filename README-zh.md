@@ -70,9 +70,9 @@ convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 
 ## 实现原理
 
-这篇文章从零开始实现了一个弹幕渲染算法，并详细分析了弹幕渲染算法。源代码在 [GitHub](https://github.com/timerring/DanmakuConvert)。
+> 注意，以下内容是我的英文博客 [Implement danmaku rendering algorithm from scratch](https://blog.timerring.com/posts/implement-danmaku-rendering-algorithm-from-scratch/)直接翻译的，可能存在不准确的地方，以我英文文章为主。
 
-> 注意，以下内容是我英文文档直接翻译的，可能存在不准确的地方，以我英文文档为主。
+这篇文章从零开始实现了一个弹幕渲染算法，并详细分析了弹幕渲染算法。源代码在 [GitHub](https://github.com/timerring/DanmakuConvert)。
 
 ## 弹幕渲染组件
 

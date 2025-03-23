@@ -72,6 +72,8 @@ convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 
 ## The implementation algorithm
 
+> The article is also posted on my blog [Implement danmaku rendering algorithm from scratch](https://blog.timerring.com/posts/implement-danmaku-rendering-algorithm-from-scratch/), feel free to check the latest revision.
+
 This article presents a comprehensive implementation of a danmaku rendering algorithm from the ground up, along with a thorough analysis of the danmaku rendering algorithm. The source code is available on [GitHub](https://github.com/timerring/DanmakuConvert).
 
 ## The component of the danmaku rendering
