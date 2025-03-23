@@ -61,7 +61,7 @@ convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 
 ## The result display
 
-![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-05-24.png)
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
 
 ## The implementation algorithm
 
