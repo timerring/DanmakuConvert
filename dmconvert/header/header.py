@@ -1,5 +1,6 @@
 # Copyright (c) 2025 DanmakuConvert
 
+
 def draw_ass_header(ass_file, resolution_x, resolution_y, font_size):
     # Write ASS header
     ass_header = f"""[Script Info]
@@ -24,5 +25,5 @@ Style: message_box,Microsoft YaHei,{font_size},&H00FFFFFF,&H00FFFFFF,&H00000000,
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 """
-    with open(ass_file, 'w', encoding='utf-8') as f:
+    with open(ass_file, "w", encoding="utf-8") as f:
         f.write(ass_header)

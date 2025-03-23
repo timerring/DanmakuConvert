@@ -14,21 +14,21 @@ class DanmakuArray:
         self.font_size = font_size
         self.rows = int(solution_y / font_size)
         self.time_length_array = [[0, 0] for _ in range(self.rows)]
-    
+
     def set_time_length(self, row, time, length):
         """Set time and length for a row"""
         if 0 <= row < self.rows:
             self.time_length_array[row] = [time, length]
         else:
             raise IndexError("Array index out of range")
-    
+
     def get_time(self, row):
         """Get time for a row"""
         if 0 <= row < self.rows:
             return self.time_length_array[row][0]
         else:
             raise IndexError("Array index out of range")
-    
+
     def get_length(self, row):
         """Get length for a row"""
         if 0 <= row < self.rows:
