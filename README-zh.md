@@ -3,7 +3,6 @@
     <source media="(prefers-color-scheme: dark)" srcset="assets/headerDark.svg" />
     <img src="assets/headerLight.svg" alt="dmconvert" />
   </picture>
-  <p> </p>
 
 [English](./README.md) | 简体中文
 
