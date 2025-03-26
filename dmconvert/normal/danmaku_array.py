@@ -13,7 +13,7 @@ class DanmakuArray:
         self.solution_y = solution_y
         self.font_size = font_size
         self.rows = int(solution_y / font_size)
-        self.time_length_array = [[0, 0] for _ in range(self.rows)]
+        self.time_length_array = [[-1, 0] for _ in range(self.rows)]
 
     def set_time_length(self, row, time, length):
         """Set time and length for a row"""
