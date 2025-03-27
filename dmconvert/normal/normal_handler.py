@@ -66,7 +66,10 @@ def draw_normal_danmaku(
 ):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert each danmaku
-        for d in root.findall(".//d"):
+        all_normal_danmaku = root.findall(".//d")
+        danmaku_count = len(all_normal_danmaku)
+        print(f"The normal danmaku pool is {danmaku_count}.", flush=True)
+        for d in all_normal_danmaku:
             # Parse attributes
             p_attrs = d.get("p").split(",")
             appear_time = float(p_attrs[0])

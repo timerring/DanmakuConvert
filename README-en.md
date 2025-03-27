@@ -47,9 +47,7 @@ More details:
 
 ```bash
 dmconvert -h
-# usage: dmconvert [-h] [-V] [-f FONTSIZE] [-x RESOLUTIONX] [-y RESOLUTIONY] -i XML [-o ASS]
-# The Python toolkit package and cli designed for convert danmaku to ass.
-# options:
+# optional arguments:
 #   -h, --help            show this help message and exit
 #   -V, --version         Print version information
 #   -f FONTSIZE, --fontsize FONTSIZE
@@ -60,6 +58,9 @@ dmconvert -h
 #                         The resolution y of the danmaku, default is 1080
 #   -i XML, --xml XML     The input xml file
 #   -o ASS, --ass ASS     The output ass file
+
+# Example:
+# dmconvert -f 38 -x 1920 -y 1080 -i sample.xml -o sample.ass
 ```
 
 ### Source Version

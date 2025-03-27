@@ -4,18 +4,28 @@ import argparse
 import sys
 import os
 import logging
+import textwrap
 from dmconvert.convert import convert_xml_to_ass
 
 
 def cli():
     parser = argparse.ArgumentParser(
-        description="The Python toolkit package and cli designed for convert danmaku to ass."
+        prog="dmconvert",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=textwrap.dedent('''
+        The Python toolkit package and cli designed for convert danmaku from xml to ass format.
+        Source code at https://github.com/timerring/DanmakuConvert
+        '''),
+        epilog=textwrap.dedent('''
+        Example:
+        dmconvert -f 38 -x 1920 -y 1080 -i input.xml -o output.ass
+        '''),
     )
     parser.add_argument(
         "-V",
         "--version",
         action="version",
-        version="dmconvert 0.0.1",
+        version="dmconvert 0.0.2 and source code at https://github.com/timerring/DanmakuConvert",
         help="Print version information",
     )
     parser.add_argument(

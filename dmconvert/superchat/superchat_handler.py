@@ -30,7 +30,10 @@ def get_sc_height(line_num, sc_font_size=38):
 
 def draw_superchat(ass_file, font_size, resolution_y, root):
     sc_list = []
-    for sc in root.findall(".//sc"):
+    all_superchat = root.findall(".//sc")
+    superchat_count = len(all_superchat)
+    print(f"The superchat pool is {superchat_count}.", flush=True)
+    for sc in all_superchat:
         appear_time = float(sc.get("ts"))
         user_name = sc.get("user")
         price = sc.get("price")
