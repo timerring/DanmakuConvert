@@ -15,9 +15,9 @@ class SuperChat:
         position_y,
         previous_y,
         message,
-        msg_box_position_x=20,
+        msg_box_position_x=10,
         msg_box_position_y=0,
-        msg_space_x=500,
+        msg_space_x=450,
         msg_space_y=1080,
         sc_font_size=38,
         move_time=0.2,
@@ -151,15 +151,16 @@ class SuperChat:
         )
 
         effect_upper_box_move = (
-            f"\\move(20,{pre_upper_box_position_y},20,{upper_box_position_y})"
+            f"\\move(10,{pre_upper_box_position_y},10,{upper_box_position_y})"
         )
         effect_user_name_move = (
             f"\\move(20,{pre_user_name_position_y},20,{user_name_position_y})"
         )
         effect_superchat_price_move = f"\\move(20,{pre_superchat_price_position_y},20,{superchat_price_position_y})"
-        effect_lower_box_msg_move = (
-            f"\\move(20,{pre_lower_box_position_y},20,{lower_box_position_y})"
+        effect_lower_box_move = (
+            f"\\move(10,{pre_lower_box_position_y},10,{lower_box_position_y})"
         )
+        effect_superchat_msg_move = f"\\move(20,{pre_lower_box_position_y},20,{lower_box_position_y})"
 
         with open(ass_path, "a") as f:
             f.write(
@@ -176,7 +177,7 @@ class SuperChat:
                     lower_box_color,
                     format_move_time,
                     format_pos_time,
-                    effect_lower_box_msg_move,
+                    effect_lower_box_move,
                 )
                 + "\n"
             )
@@ -197,15 +198,16 @@ class SuperChat:
             )
             f.write(
                 self.draw_superchat_message(
-                    format_move_time, format_pos_time, effect_lower_box_msg_move
+                    format_move_time, format_pos_time, effect_superchat_msg_move
                 )
                 + "\n"
             )
 
-        effect_upper_box_position = f"\\pos(20,{upper_box_position_y})"
+        effect_upper_box_position = f"\\pos(10,{upper_box_position_y})"
         effect_user_name_position = f"\\pos(20,{user_name_position_y})"
         effect_superchat_price_position = f"\\pos(20,{superchat_price_position_y})"
-        effect_lower_box_msg_position = f"\\pos(20,{lower_box_position_y})"
+        effect_lower_box_position = f"\\pos(10,{lower_box_position_y})"
+        effect_superchat_msg_position = f"\\pos(20,{lower_box_position_y})"
 
         with open(ass_path, "a") as f:
             f.write(
@@ -222,7 +224,7 @@ class SuperChat:
                     lower_box_color,
                     format_pos_time,
                     end_time,
-                    effect_lower_box_msg_position,
+                    effect_lower_box_position,
                 )
                 + "\n"
             )
@@ -243,7 +245,7 @@ class SuperChat:
             )
             f.write(
                 self.draw_superchat_message(
-                    format_pos_time, end_time, effect_lower_box_msg_position
+                    format_pos_time, end_time, effect_superchat_msg_position
                 )
                 + "\n"
             )
