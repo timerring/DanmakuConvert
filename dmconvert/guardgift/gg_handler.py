@@ -26,7 +26,7 @@ def extract_gift_data(element):
     return data
 
 
-def draw_gift_and_guard(ass_file, root, font_size, resolution_y):
+def draw_gift_and_guard(ass_file, root, sc_font_size, resolution_y):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert gifts and guards
         raw_gifts = [
@@ -41,6 +41,6 @@ def draw_gift_and_guard(ass_file, root, font_size, resolution_y):
         # generate the output
         for gift in processed:
             lines = generate_ass_line(
-                gift, resolution_y, font_size
+                gift, resolution_y, sc_font_size
             )  # example parameters
             f.writelines(lines)

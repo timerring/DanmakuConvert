@@ -27,7 +27,7 @@ def get_sc_height(line_num, sc_font_size):
     return sc_height, top_box_height, btm_box_height
 
 
-def draw_superchat(ass_file, font_size, resolution_y, root):
+def draw_superchat(ass_file, sc_font_size, resolution_y, root):
     sc_list = []
     all_superchat = root.findall(".//sc")
     superchat_count = len(all_superchat)
@@ -39,7 +39,7 @@ def draw_superchat(ass_file, font_size, resolution_y, root):
         disapper_time = float(sc.get("ts")) + float(sc.get("time"))
         text = sc.text
         processed_text, line_num = get_text_line_num(text)
-        sc_height, _, btm_box_height = get_sc_height(line_num, font_size)
+        sc_height, _, btm_box_height = get_sc_height(line_num, sc_font_size)
         process = ""
         sc_list.append(
             [
@@ -54,16 +54,16 @@ def draw_superchat(ass_file, font_size, resolution_y, root):
             ]
         )
 
-    render_superchat(ass_file, font_size, resolution_y, sc_list)
+    render_superchat(ass_file, sc_font_size, resolution_y, sc_list)
 
 
-def render_superchat(ass_file, font_size, resolution_y, data):
+def render_superchat(ass_file, sc_font_size, resolution_y, data):
     """
     Render superchat events to the ass file.
 
     Args:
         ass_file (str): The path to the ass file.
-        font_size (int): The font size, which is used to calculate some render parameters.
+        sc_font_size (int): The superchat font size, which is used to calculate some render parameters.
         resolution_y (int): The resolution y, which is used to calculate the initial y coordinate.
         data (list): The data to render, which is a list of superchat events.
     """
@@ -127,7 +127,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
     ) in enumerate(data):
         # print(f"\nSC {i} ({start}-{end}):")
         # Initial y coordinate
-        previous_y = resolution_y - font_size * 2
+        previous_y = resolution_y - sc_font_size * 2
         current_y = previous_y - sc_height
         current_time = start
         # print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
@@ -150,7 +150,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
                     current_y,
                     previous_y,
                     text,
-                    font_size,
+                    sc_font_size,
                 ).write_superchat(ass_file)
                 previous_y = current_y
                 if delta_y[0] == "-":
@@ -169,5 +169,5 @@ def render_superchat(ass_file, font_size, resolution_y, data):
             current_y,
             previous_y,
             text,
-            font_size,
+            sc_font_size,
         ).write_superchat(ass_file)

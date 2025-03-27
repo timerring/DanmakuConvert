@@ -36,6 +36,13 @@ def cli():
         help="The font size of the danmaku, default is 38",
     )
     parser.add_argument(
+        "-sf",
+        "--scfontsize",
+        default=38,
+        type=int,
+        help="The font size of the superchat, default is 38",
+    )
+    parser.add_argument(
         "-x",
         "--resolutionx",
         default=1920,
@@ -61,6 +68,7 @@ def cli():
         ass_file = args.ass if args.ass else os.path.splitext(xml_file)[0] + ".ass"
         convert_xml_to_ass(
             args.fontsize,
+            args.scfontsize,
             args.resolutionx,
             args.resolutiony,
             xml_file,
