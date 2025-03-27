@@ -47,11 +47,13 @@ More details:
 
 ```bash
 dmconvert -h
-# optional arguments:
+# options:
 #   -h, --help            show this help message and exit
 #   -V, --version         Print version information
 #   -f FONTSIZE, --fontsize FONTSIZE
 #                         The font size of the danmaku, default is 38
+#   -sf SCFONTSIZE, --scfontsize SCFONTSIZE
+#                         The font size of the superchat and gift, default is 38
 #   -x RESOLUTIONX, --resolutionx RESOLUTIONX
 #                         The resolution x of the danmaku, default is 1920
 #   -y RESOLUTIONY, --resolutiony RESOLUTIONY
@@ -60,7 +62,8 @@ dmconvert -h
 #   -o ASS, --ass ASS     The output ass file
 
 # Example:
-# dmconvert -f 38 -x 1920 -y 1080 -i sample.xml -o sample.ass
+# dmconvert -i input.xml -o output.ass
+# dmconvert -f 38 -sf 30 -x 1920 -y 1080 -i input.xml -o output.ass
 ```
 
 ### Source Version
@@ -72,9 +75,10 @@ from dmconvert.convert import convert_xml_to_ass
 # xml_file = "sample.xml"
 # ass_file = "sample.ass"
 # font_size = 38
+# sc_font_size = 30
 # resolution_x = 720
 # resolution_y = 1280
-convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
+convert_xml_to_ass(font_size, sc_font_size, resolution_x, resolution_y, xml_file, ass_file)
 ```
 
 ## The implementation algorithm
@@ -465,13 +469,13 @@ As we can see, the superchat show up and disappear in chronological order, so ho
 My solution is: calculate the position of the superchat message box every time the superchat changes its position in its life cycle. The concrete algorithm is as follows:
 
 ```python
-def render_superchat(ass_file, font_size, resolution_y, data):
+def render_superchat(ass_file, sc_font_size, resolution_y, data):
     """
     Render superchat events to the ass file.
 
     Args:
         ass_file (str): The path to the ass file.
-        font_size (int): The font size, which is used to calculate some render parameters.
+        sc_font_size (int): The superchat font size, which is used to calculate some render parameters.
         resolution_y (int): The resolution y, which is used to calculate the initial y coordinate.
         data (list): The data to render, which is a list of superchat events.
     """
@@ -535,7 +539,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
     ) in enumerate(data):
         # print(f"\nSC {i} ({start}-{end}):")
         # Initial y coordinate
-        previous_y = resolution_y - font_size * 2
+        previous_y = resolution_y - sc_font_size * 2
         current_y = previous_y - sc_height
         current_time = start
         # print(f"Time {start}: y = {current_y}, previous_y = {previous_y}")
@@ -558,6 +562,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
                     current_y,
                     previous_y,
                     text,
+                    sc_font_size,
                 ).write_superchat(ass_file)
                 previous_y = current_y
                 if delta_y[0] == "-":
@@ -576,6 +581,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
             current_y,
             previous_y,
             text,
+            sc_font_size,
         ).write_superchat(ass_file)
 ```
 

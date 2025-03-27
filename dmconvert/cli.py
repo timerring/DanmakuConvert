@@ -18,7 +18,8 @@ def cli():
         '''),
         epilog=textwrap.dedent('''
         Example:
-        dmconvert -f 38 -x 1920 -y 1080 -i input.xml -o output.ass
+        dmconvert -i input.xml -o output.ass
+        dmconvert -f 38 -sf 30 -x 1920 -y 1080 -i input.xml -o output.ass
         '''),
     )
     parser.add_argument(
@@ -40,7 +41,7 @@ def cli():
         "--scfontsize",
         default=38,
         type=int,
-        help="The font size of the superchat, default is 38",
+        help="The font size of the superchat and gift, default is 38",
     )
     parser.add_argument(
         "-x",
@@ -64,8 +65,8 @@ def cli():
     args = parser.parse_args()
 
     if os.path.splitext(args.xml)[1] == ".xml":
-        xml_file = args.xml
-        ass_file = args.ass if args.ass else os.path.splitext(xml_file)[0] + ".ass"
+        xml_file = os.path.abspath(args.xml)
+        ass_file = os.path.abspath(args.ass) if args.ass else os.path.abspath(os.path.splitext(xml_file)[0] + ".ass")
         convert_xml_to_ass(
             args.fontsize,
             args.scfontsize,
