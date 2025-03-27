@@ -6,7 +6,7 @@
 
 [English](./README-en.md) | 简体中文
 
-这是一个 Python 版本算法优化过的 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory), 可以将 XML 弹幕转换为 ASS 弹幕。
+这是一个 Python 版本算法优化过的 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory), 可以将 XML 弹幕转换为 ASS 弹幕，附带从 0 开始实现的教程。
 
 </div>
 
