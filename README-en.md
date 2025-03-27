@@ -4,44 +4,46 @@
     <img src="assets/headerLight.svg" alt="dmconvert" />
   </picture>
 
-[English](./README.md) | 简体中文
+English | [简体中文](./README.md)
 
-这是一个 Python 版本算法优化过的 [DanmakuFactory](https://github.com/hihkm/DanmakuFactory), 可以将 XML 弹幕转换为 ASS 弹幕。
+Convert XML danmaku to ASS danmaku.
+
+The python implementation of the [DanmakuFactory](https://github.com/hihkm/DanmakuFactory).
 
 </div>
 
-## 功能特性
+## Features
 
-- 将XML弹幕转换为ASS弹幕。
-- 更高效的弹幕排列方式。详见 [issue](https://github.com/hihkm/DanmakuFactory/issues/104#issuecomment-2716857788)。
-- 移除 [FFmpeg无法渲染的 emoji 符号](https://trac.ffmpeg.org/ticket/5777)。
-- 支持不同操作系统，通过Python实现跨平台。
-- 不需要任何第三方库。
-- 支持不同分辨率。
-- 支持不同字体大小。
-- 支持不同颜色。
-- 支持一些持久化预设的参数（Work In Progress）。
-- 未来将添加更多功能，如果您有任何优化或者改进建议，欢迎 [提交 issue](https://github.com/timerring/DanmakuConvert/issues)。
+- Convert XML danmaku to ASS danmaku.
+- More efficient arrangement of danmaku. See the [issue](https://github.com/hihkm/DanmakuFactory/issues/104#issuecomment-2716857788).
+- Remove the abundant emojis which [cannot be rendered by ffmpeg](https://trac.ffmpeg.org/ticket/5777).
+- Support different kinds of OS with Python.
+- Do not require any third-party libraries.
+- Support different resolutions.
+- Support different font sizes.
+- Support different colors.
+- Support some persistence preset parameter sets.(WIP)
+- More features will be added in the future, if you have any suggestions, welcome to [open an issue](https://github.com/timerring/DanmakuConvert/issues).
 
-## 成果展示
+## The result display
 
 ![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
 
-## 安装
+## Installation
 
 ```bash
 pip install dmconvert
 ```
 
-## 使用方法
+## Usage
 
-### 命令行版本
+### CLI Version
 
 ```bash
 dmconvert -i sample.xml
 ```
 
-更多帮助通过 `-h` 参数查看:
+More details:
 
 ```bash
 dmconvert -h
@@ -60,12 +62,12 @@ dmconvert -h
 #   -o ASS, --ass ASS     The output ass file
 ```
 
-### 直接引用
+### Source Version
 
 ```python
 from dmconvert.convert import convert_xml_to_ass
 
-# 例如
+# eg.
 # xml_file = "sample.xml"
 # ass_file = "sample.ass"
 # font_size = 38
@@ -74,28 +76,28 @@ from dmconvert.convert import convert_xml_to_ass
 convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
 ```
 
-## 实现原理
+## The implementation algorithm
 
-> 注意，以下内容是我的英文博客 [Implement danmaku rendering algorithm from scratch](https://blog.timerring.com/posts/implement-danmaku-rendering-algorithm-from-scratch/)直接翻译的，可能存在不准确的地方，以我英文文章为主。
+> The article is also posted on my blog [Implement danmaku rendering algorithm from scratch](https://blog.timerring.com/posts/implement-danmaku-rendering-algorithm-from-scratch/), feel free to check the latest revision.
 
-这篇文章从零开始实现了一个弹幕渲染算法，并详细分析了弹幕渲染算法。源代码在 [GitHub](https://github.com/timerring/DanmakuConvert)。
+This article presents a comprehensive implementation of a danmaku rendering algorithm from the ground up, along with a thorough analysis of the danmaku rendering algorithm. The source code is available on [GitHub](https://github.com/timerring/DanmakuConvert).
 
-## 弹幕渲染组件
+## The component of the danmaku rendering
 
-通常，一个弹幕渲染图像由以下组件组成：
+Normally, a danmaku rendering image is comprised of the following components:
 
-- Superchat 消息
-- 礼物消息（包括舰长等信息）
-- 底部弹幕
-- 滚动弹幕
+- Superchat message
+- Gift message(include premium member joining info)
+- Bottom danmakus
+- Rolling danmakus
 
 ![The components of the danmaku rendering](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-20-16.png)
 
-那么，如何从零开始实现一个弹幕渲染算法呢？我们首先需要了解弹幕文件的主要格式。
+So how to implement the danmaku rendering algorithm from scratch? We should know the main format of the danmaku file.
 
-## XML 弹幕文件结构
+## XML Danmaku File Structure
 
-首先，我们可以分析 XML 弹幕文件的结构。
+First, we can analyze the structure of XML danmaku file.
 
 ```xml
 <?xml version='1.0' encoding='utf-8'?>
@@ -121,29 +123,29 @@ convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file)
   </i>
   ```
 
-XML 文件由以下两个主要元素组成：
-- metadata: 包含直播房间或视频的信息
-- d: 包含弹幕信息
+The XML file is comprised of main 2 elements:
+- metadata: contains the information of the live room or video
+- d: contains the danmaku information
 
 
-### 弹幕信息
-<d> 元素的一般结构如下：
+### danmaku info
+The general of <d> element is as follows:
 
 ```xml
 <d p=" 0.000,     1,    25,5816798,1733047466414,   0,   73c9f86f,-1189105972" uid="0" user="X***">?</d>
 <d p="{time},{type},{size},{color},{timestamp},{pool},{uid_crc32},{row_id}" uid="{uid}" user="{user}">{text}</d>
 ```
 
-- time: 弹幕显示的时间
-- type: 弹幕类型
-- size: 弹幕大小，12 小，16 非常小，18 小，25 中等，36 大，45 非常大，64 巨大
-- color: 弹幕的 **十进制** RGB 颜色，例如十六进制: `#FFFFFF` -> 十进制: `16777215`
-- timestamp: 弹幕的时间戳
-- pool: 弹幕池类型
-- uid_crc32: 弹幕发送者的 uid 的 crc32 哈希值，用于忽略特定用户的弹幕
-- row_id: 弹幕的行 id，用于历史弹幕
+- time: the time of the danmaku show up
+- type: the type of the danmaku
+- size: the size of the danmaku, 12 tiny，16 very small, 18 small, 25 middle, 36 large, 45 very large, 64 huge
+- color: the **decimal** RGB color of the danmaku, eg hexadecimal: `#FFFFFF` -> decimal: `16777215`
+- timestamp: the timestamp of the danmaku
+- pool: the danmaku pool type
+- uid_crc32: the crc32 hash of the danmaku sender's uid, designed for ignore specific user's danmaku
+- row_id: the row id of the danmaku, designed for the history danmaku
 
-弹幕类型和弹幕池类型的关系：
+The relationship of type and pool:
 
 | pool\type | 1 | 4 | 5 | 6 | 7 | 9 |
 | --------- | - | - | - | - | - | - |
@@ -156,17 +158,17 @@ XML 文件由以下两个主要元素组成：
 [^2]:precise means: `[{x1(0-1)|(px)},{y1},"{Aplha0(0-1)}-{Alpha1}",{Lifetime},"{Text}",{Z_Rotation},{Y_Rotation},{x2},{y2},{Move_Time(ms)},{Delay_Time(ms)},{Outline[01]},"{Fontname}",{Linear_Speedup(Bool)}]`
 
 
-## ASS 文件结构
+## ASS File Structure
 
 ### SSA
 
-`SSA` 是 `Sub Station Alpha` 的缩写，是一种用于许多视频播放器的字幕格式。它比 `SRT` 实现更复杂的字幕效果。
+The `SSA` is the abbreviation of `Sub Station Alpha`, which is a subtitle format used in many video players. It can implement more complex subtitle effects than `SRT`.
 
 ### ASS
 
-`ASS` 是 `Advanced SubStation Alpha` 的缩写，是 `SSA` 的 V4 版本。
+The `ASS` is the abbreviation of `Advanced SubStation Alpha`, which is the V4 version of `SSA`.
 
-ASS 文件[^ass]的基本结构如下：
+The basic structure of ASS file[^ass] is as follows:
 
 [^ass]:https://web.archive.org/web/20210604141133/https://www.douban.com/note/658520175/
 
@@ -196,7 +198,7 @@ Dialogue: 0,0:00:00.00,0:00:12.00,R2L,,0000,0000,0000,,{\move(735,1,-15,1)}{\c&H
 Dialogue: 0,0:00:00.00,0:00:12.00,R2L,,0000,0000,0000,,{\move(751,39,-31,39)}{\c&HDEC158}good
 ```
 
-从上面的结构可以看出，ASS 文件由以下三个部分组成：
+From above we can find the ASS file is comprised of 3 parts:
 - [Script Info]
 - [V4+ Styles]
 - [Events]
@@ -214,13 +216,13 @@ WrapStyle: 2 # Whether to change lines, due to the bilibili restrictions, this v
 ScaledBorderAndShadow: yes # Whether to scale the border and shadow of the video with the resolution
 ```
 
-在 [Script Info] 部分，关键且可更改的参数是：
-- PlayResX: 视频的 X 分辨率，默认是 **1920**
-- PlayResY: 视频的 Y 分辨率，默认是 **1080**
+In the [Script Info] part, the key and changeable parameters are:
+- PlayResX: the X resolution of the video, default is **1920**
+- PlayResY: the Y resolution of the video, default is **1080**
 
 #### V4+ Styles
 
-这部分是 [Events] 部分的一些预定义样式。
+This part is some predefined styles for the [Events] part.
 
 ```ass
 [V4+ Styles]
@@ -234,14 +236,14 @@ Style: SP,Microsoft YaHei,38,&H00FFFFFF,&H00FFFFFF,&H00000000,&H1E6A5149,0,0,0,0
 Style: message_box,Microsoft YaHei,28,&H00FFFFFF,&H00FFFFFF,&H00000000,&H1E6A5149,0,0,0,0,100.00,100.00,0.00,0.00,1,0.0,0.7,7,0,0,0,1
 ```
 
-大部分样式可以很容易理解。
+Most of the styles can be easily understood.
 
-在 [V4+ Styles] 部分，关键且可更改的参数是：
-- Fontname: 字体名称，默认是 `Microsoft YaHei`
-- Fontsize: 字体大小，默认是 `38`
-- MarginL: 左边距，默认是 `0`
-- MarginR: 右边距，默认是 `0`
-- MarginV: 垂直边距，默认是 `0`
+In the [V4+ Styles] part, the key and changeable parameters are:
+- Fontname: the font name, default is `Microsoft YaHei`
+- Fontsize: the font size, default is `38`
+- MarginL: the left margin, default is `0`
+- MarginR: the right margin, default is `0`
+- MarginV: the vertical margin, default is `0`
 
 #### Events
 
@@ -252,89 +254,92 @@ Dialogue: 0,0:00:00.00,0:00:12.00,   R2L,     ,    0000,    0000,    0000,      
 Dialogue: 0,0:00:00.00,0:00:12.00,   R2L,     ,    0000,    0000,    0000,       ,{\move(751,39,-31,39)}{\c&HDEC158}good
 ```
 
-在 [Events] 部分，关键且可更改的参数是：
-- Layer: 弹幕的层级
-- Start: 弹幕的开始时间
-- End: 弹幕的结束时间
-- Style: 弹幕的样式，例如 `R2L` 或 `BTM`
-- Name, MarginL, MarginR, MarginV, Effect: 总是为空
+In the [Events] part, the key and changeable parameters are:
+- Layer: the layer of the danmaku
+- Start: the start time of the danmaku
+- End: the end time of the danmaku
+- Style: the style of the danmaku, 
+- Name, MarginL, MarginR, MarginV, Effect: always empty
 
-关于 `Layer` 参数：
-- `R2L` 弹幕和 `Superchat` 弹幕在层级 `0`。
-- `BTM` 弹幕和 `gift` 弹幕在层级 `1`。
-
-关于 `Start` 和 `End` 时间：
-- 默认滚动时间为 12 秒。
-- `BTM` 弹幕的固定时间为 5 秒。
-
-关于 `Style` 参数：
-- `R2L`: 从右到左，对应 XML 文件中的 `1` 弹幕类型。
-- `BTM`: 从下到上，对应 XML 文件中的 `4` 弹幕类型。
-- `message_box`: 消息框，对应 XML 文件中的 `<sc>` 或 `<gift>`。
+About the `Layer` parameter:
+- The `R2L danmaku` and `Superchat danmaku` are in the layer `0`.
+- The `BTM danmaku` and `gift danmaku` are in the layer `1`.
 
 
-## 转换
+About the `Start` and `End` time:
+- By default the scroll time is 12 seconds.
+- The fix time of BTM danmaku is 5 seconds.
 
-接下来，我将分析具体的弹幕转换算法。
+About the `Style` parameter:
+- R2L: right to left, which is corresponding to the `1` danmaku `type` in the XML file.
+- BTM: bottom to top, which is corresponding to the `4` danmaku `type` in the XML file.
+- message_box: message box, which is corresponding to the `<sc>` or `<gift>` in the XML file.
 
-### R2L 和 BTM 弹幕(普通弹幕)
 
-XML 文件如下：
+## Convert
+
+From above analysis, we should convert the danmaku from XML to ASS.
+
+So next I will analyze the conversion in terms of specific danmaku.
+
+### R2L and BTM danmaku(Normal danmaku)
+
+The xml file is as follows:
 ```xml
 <d p=" 0.000,     1,    25,5816798,1733047466414,   0,   73c9f86f,-1189105972" uid="0" user="X***">?</d>
 <d p="837.163,    4,    25,5816798,1732882824163,   0,   f201ec3c,51587109" uid="0" user="S***">what？</d>
 <d p="{time},{type},{size},{color},{timestamp},{pool},{uid_crc32},{row_id}" uid="{uid}" user="{user}">{text}</d>
 ```
 
-ASS 文件如下：
+The ass file is as follows:
 ```ass
 Format: Layer,   Start,       End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue: 0,0:00:00.00,0:00:12.00,   R2L,     ,    0000,    0000,    0000,       ,{\move(735,1,-15,1)}{\c&HDEC158}?
 Dialogue: 1,0:13:57.16,0:14:02.16,   BTM,     ,    0000,    0000,    0000,       ,{\pos(960,1043)}{\c&HDEC158}what？
 ```
 
-对于普通 R2L 和 BTM 弹幕，`Layer` 是 `0`。`Start` 时间是 XML 文件中的 `time`。`End` 时间是 XML 文件中的 `time` 加上 12 秒（可以更改）。`Style` 是 `R2L` 或 `BTM`。`Name` 为空。`MarginL` 为 `0000`。`MarginR` 为 `0000`。`MarginV` 为 `0000`。`Effect` 为空。
+For the normal R2L and BTM danmaku, the `Layer` is `0`. `Start` time is the `time` in the XML file. `End` time is the `time` in the XML file plus 12 seconds(which can be changed). `Style` is `R2L` or `BTM`. `Name` is empty. `MarginL` is `0000`. `MarginR` is `0000`. `MarginV` is `0000`. `Effect` is empty. 
 
-`Text` 是 XML 文件中的 `text`。它包含三个部分：
-- `{\move(735,1,-15,1)}`: **Move Effect** 用于 R2L 弹幕，这是弹幕的位置。括号内的第一个和第二个数字是弹幕的初始位置(x, y)，第三个和第四个数字是弹幕的最终位置(x, y)。`y` 应该相同。我将在下一节分析算法。
-- `{\pos(960,1043)}`: **Pos Effect** 用于 BTM 弹幕，这是弹幕的位置。括号内的数字是弹幕的位置(x, y)。我将在下一节分析算法。
-- `{\c&HDEC158}`: 弹幕的颜色，可以转换为十进制的 `color` 在 XML 文件中。
-- `text`: 弹幕的文本。
+Text is the `text` in the XML file. It contains three parts:
+- `{\move(735,1,-15,1)}`: **the Move Effect** for the R2L danmaku, which is the position of the danmaku. The first and second number inside is the initial position(x, y) of the danmaku, and the third and fourth number is the final position(x, y) of the danmaku. The `y` should be the same. The algorithm I will analyze in the next section.
+- `{\pos(960,1043)}`: **the Pos Effect** for the BTM danmaku, which is the position of the danmaku. The number inside is the position(x, y) of the danmaku. The algorithm I will analyze in the next section.
+- `{\c&HDEC158}`: the color of the danmaku, which can be converted from the decimal `color` in the XML file.
+- `text`: the text of the danmaku.
 
-#### 动效部分
+#### Move Effect
 
-Move Effect 是 R2L 弹幕最重要的部分。
+The `move` effect is the most important part of the R2L danmaku.
 
-##### X 位置移动
+##### X Position movement
 
-基本算法是从初始位置和最终位置的弹幕。我们应该保持 `y` 位置相同。让我们先谈谈 `x` 位置。
+The basic algorithm is from the initial position and the final position of the danmaku. We should keep the `y` position the same. Let's talk about the `x` position first.
 
-- 初始位置: `(resolution.x + text_length/2, PositionY)`
-- 最终位置: `(-1 * text_length / 2, PositionY)`
+- Initial position: `(resolution.x + text_length/2, PositionY)`
+- Final position: `(-1 * text_length / 2, PositionY)`
 
-那么如何得到 `text_length` 呢？
+So how to get the `text_length`?
 
-我们应该计算 `cnt` 每个字符的 UTF-8 编码长度。因此，我们使用 `0xC0` 来判断当前字节是否是多字节字符的开始，因为 `110- ----` 是 `0xC0`，而 `0x00` 到 `0x7F` 是 ASCII 字符，是单字节字符。因此，第二个判断是它必须小于 `0x80`。如果不是 UTF-8 编码，我们在这里直接使用 `strlen` 函数。
+We should count `cnt` the every character's length in UTF-8 encoding. So we use the `0xC0` to judge whether the current byte is the start of a multi-byte character, because `110- ----` is `0xC0`, and `0x00` to `0x7F` is the ASCII character, which is a single-byte character. Therefore, the second judgment is that it must be less than `0x80`. If it is not UTF-8 encoding, we here directly use the `strlen` function.
 
-因此，`text_length` 可以近似为以下公式：
+So the `text_length` can be approximated by the following formula:
 
 `text_length = cnt * int((fontSizeSet + (fontSizeInXml - 25)) / 1.2);`
 
-XML 文件中的 `fontSizeInXml` 是弹幕的 `size`。因此，在简单版本中，我们可以直接使用以下公式：
+The `fontSizeInXml` which is in the XML file is the `size` of the danmaku. So in the simple version, we can just use the formula below:
 
 `text_length = cnt * int((fontSizeSet) / 1.2);`
 
-##### Y 位置排列算法
+##### Y Position movement
 
-那么我们应该如何安排 `y` 的位置呢？我们应该确保下一个弹幕不会与前一个弹幕重叠。
+So how should we arrange the position of `y`? We should ensure that the next danmaku would not be overlapped with the previous one.
 
-我认为我们可以回到当前弹幕和前一个弹幕之间的距离问题。为了避免追赶的情况，我们只需要确保同一轨道（例如 n）的下一个弹幕不能追赶前一个弹幕（例如 n-1），从而确保它不能间接追赶 n-2。如果它可以追赶，我们应该比较下一个轨道中的下一个弹幕数据。
+I think we can return to the problem of the distance between the current danmaku and the previous one. To avoid the situation of catching up, we only need to ensure that the next danmaku in the same track(eg. n) cannot catch up with the previous one(eg. n-1), thus will ensure it cannot catch up with the n-2 indirectly. If it can catch up, we should compare the next danmaku data in the next track.
 
-首先，每个弹幕的总距离是固定的，即 `text_length + resolution.X`。然后滚动时间固定，我认为默认时间是 12 秒，所以我们可以计算每个弹幕的速度 `V_i`，每个轨道只需要存储最后一个弹幕的开始时间 `start_time` 和弹幕的长度 `length`。
+First, the total distance of each danmaku is fixed, which is `text_length + resolution.X`. Then the scrolling time is fixed, I think the default time is 12s, so we can calculate the speed of each danmaku `V_i`, and each track only needs to store the start time of the last danmaku `start_time` and the length of the danmaku `length`.
 
-然后我们需要确定下一个弹幕 B 是否可以追赶前一个弹幕 A，首先，我们需要计算距离差 `Delta_X`。即，`Delta_X = (start_time_B - start_time_A) × V_a - text_length_A / 2 - text_length_B / 2`。当然，出于美学原因，可以保留一定的距离。然后，我们判断这个距离是否可以在剩余时间内覆盖。速度差是 `Delta_V = V_B - V_A`，追赶所需的近似时间可以计算为 `Delta_T = Delta_X / Delta_V`。我们只需要确保 `Start_time_B - Start_time_A > Delta_T` 以确保两个弹幕不会重叠。
+Then we need to determine whether the next danmaku B can catch up with the previous danmaku A, first, we need to calculate the distance difference `Delta_X`. That is, `Delta_X = (start_time_B - start_time_A) × V_a - text_length_A / 2 - text_length_B / 2`. Of course, for aesthetic reasons, a certain margin distance can be reserved. Then, we judge whether this distance can be covered within the remaining time. The speed difference is `Delta_V = V_B - V_A`, and the approximate time required for catching up can be calculated as `Delta_T = Delta_X / Delta_V`. We just need to ensure that `Start_time_B - Start_time_A > Delta_T` to ensure that the two danmakus will not overlap.
 
-因此，实际上只需要一个数组和一个公式。当然，在大量弹幕的情况下，重叠仍然可能发生。因此，还需要一个回退策略。这个回退策略非常简单。我们只需要在每次比较时添加一个标志来保存具有最大负时间差的轨道编号。这样，即使有追赶的情况，弹幕也会在弹幕区域的最右侧相遇。在大量弹幕的情况下，观看体验仍然可以得到保证。这种方法在极端情况下可以理论上容纳更多的非重叠弹幕。
+So, in the end, actually only one array and one formula are needed. Of course, in the case of a large number of danmakus, overlapping may still occur. Therefore, a fallback strategy is also required. This fallback strategy is quite simple. We just need to add a flag during each comparison to save the track number with the largest negative time difference. In this way, even if there is a catch-up situation, the danmakus will meet at the far right of the danmaku area. In the case of a large number of danmakus, the viewing experience can still be guaranteed. This method can theoretically accommodate more non-overlapping danmakus in extreme situations.
 
 ```python
 def get_position_y(font_size, appear_time, text_length, resolution_x, roll_time, array):
@@ -370,9 +375,9 @@ def get_position_y(font_size, appear_time, text_length, resolution_x, roll_time,
     return 1 + best_row * font_size
 ```
 
-#### 固定效果
+#### Pos Effect
 
-`pos` 效果是 BTM 弹幕最重要的部分。由于每个弹幕的显示时间约为 5 秒，因此我们应该确保该单个弹幕在此期间不会重叠。如果有其他弹幕在此期间，我们应该将新生成的弹幕向上移动。因此，我们的核心算法是获取弹幕的 `PositionY` 如下：
+The `pos` effect is the most important part of the BTM danmaku. Due to the display of every danmaku is around 5 seconds, so we should make sure this single danmaku would not be overlapped in this period. And if there are other danmaku in this period, we should move the new generated danmaku up. So our core algorithm is to get the `PositionY` of the danmaku is as belows:
 
 ```python
 # Bottom danmaku algorithm
@@ -400,23 +405,36 @@ def get_fixed_y(font_size, appear_time, resolution_y, array):
     return resolution_y - font_size * (best_row + 1) + 1 # return the best line in the screen.
 ```
 
-### Superchat 付费弹幕
+### Superchat danmaku
 
-#### 文件结构
+#### File structure
 
-Superchat XML 格式如下：
+The super chat xml format is as follows:
 
 ```xml
 <sc ts="50.000" uid="the_user_id" user="the_user_name" price="30" time="60">This is a superchat</sc>
 ```
 
-- `ts`: 付费留言出现的时间。
-- `uid`: 用户 id。
-- `user`: 用户名。
-- `price`: 付费留言的价格。
-- `time`: 付费留言的显示时间。
+- `ts`: The superchat appears time.
+- `uid`: The user id.
+- `user`: The user name.
+- `price`: The price of the superchat.
+- `time`: The display time of the superchat.
 
-ASS 文件如下：
+Regarding the specific rules on Bilibili, super chats with different prices will have different display durations and word limitations. The details are as follows[^superchat_rules]:
+
+[^superchat_rules]: https://live.bilibili.com/blackboard/live-superchat-intro-web.html
+
+|price(¥)|price range|display duration|chinese characters limit|
+| ---- | ---- | ---- | ---- |
+|30|30≤ custom price ＜50|60s|40|
+|50|50≤ custom price ＜100|2min|50|
+|100|100≤ custom price ＜500|5min|60|
+|500|500≤ custom price ＜1000|30min|80|
+|1000|1000≤ custom price ＜2000|1h|90|
+|2000|custom price ≥2000|2h|100| 
+
+The ass file is as follows:
 
 ```ass
 Dialogue: 0,0:00:59.20,0:01:10.00,message_box,,0000,0000,0000,,{\pos(20,826.0)\c&HFFF5ED\p1\bord0\shad0}m 0 19 b 0 9.5 9.5 0 19 0 l 481 0 b 490.5 0 500 9.5 500 19 l 500 78 l 0 78
@@ -426,27 +444,27 @@ Dialogue: 1,0:00:59.20,0:01:10.00,message_box,,0000,0000,0000,,{\pos(20,870.0)\c
 Dialogue: 1,0:00:59.20,0:01:10.00,message_box,,0000,0000,0000,,{\pos(20,904.0)\c&HFFFFFF\bord0\shad0}The display time of the superchat.
 ```
 
-每个付费留言消息框由 5 部分组成：
-- 上框
-- 下框
-- 用户名
-- 价格
-- 付费留言文本
+Every superchat danmaku message box is comprised of 5 parts:
+- the upper box
+- the lower box
+- the user name
+- the price
+- the superchat text
 
-#### 位置排列算法
+#### Postion Arrangement Algorithm
 
-对于上框和下框参数，我不会在这里展示它们，如果你感兴趣，可以参考我的仓库中的 `draw_lower_box` 和 `draw_upper_box` 函数，许多绘图参数参考了 **DanmakuFactory**[^danmaku_factory]，非常感谢作者。在这里我想谈谈如何根据其他付费留言的出现和消失来移动付费留言消息框。
+For the upper box and lower box paramaters, I will not show them here, if you are interested, you can refer to the function `draw_lower_box` and `draw_upper_box` in my repository for more details, and many drawing parameters are referenced from the **DanmakuFactory**[^danmaku_factory], very grateful to the author. Here I would like to talk about how to make the superchat message box move according to other superchats appear and disappear.
 
 [^danmaku_factory]: https://github.com/hihkm/DanmakuFactory
 
-我们可以看到，付费留言按照时间顺序出现和消失，那么我们如何在特定时间点定义付费留言的位置呢？
+As we can see, the superchat show up and disappear in chronological order, so how can we define the superchat position in a specific timespot?
 
-我的解决方案是：每次付费留言在其生命周期中改变位置时计算付费留言消息框的位置。具体的算法如下：
+My solution is: calculate the position of the superchat message box every time the superchat changes its position in its life cycle. The concrete algorithm is as follows:
 
 ```python
 def render_superchat(ass_file, font_size, resolution_y, data):
     """
-    将付费留言事件渲染到 ASS 文件中。
+    Render superchat events to the ass file.
 
     Args:
         ass_file (str): The path to the ass file.
@@ -558,7 +576,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
         ).write_superchat(ass_file)
 ```
 
-这里我取消了 print 的注释，你可以看到 `sample.xml` 的 sc 的排列结果如下：
+Here I uncommented the print test code, so you can see the parsed result of the `sample.xml`.
 
 ```
 SC 0 (10.0-70.0):
@@ -591,33 +609,33 @@ SC 6 (303.0-363.0):
 Time 303.0: y = 1002, previous_y = 1204
 ```
 
-我们现在知道了每个时间点的 sc 的准确位置，所以我们可以很容易地在 ASS 文件中渲染它们。
+Then we have the danmaku position of every timespot, so we can render the super chat in the ass file easily.
 
-#### 移动效果算法
+#### Bubble Movement Effect Algorithm
 
-但是，这些是最好的显示吗？我认为不是。如果我们只考虑位置，视频会太无聊，所以我们应该给付费留言的出现添加一些动画。想想付费留言就像一个气泡，它会根据其他付费留言的出现和消失而上下移动。图片会更适合观众。
+But, are these the best display? I think not. If we only consider the position, the video will be too boring, so we should add some animation to the superchat appearance. Think about the superchat like a bubble, it will move up and down according to other superchat appearance and disappearance. The picture will be more suitable for the audience.
 
-现在我们可以思考气泡移动效果的算法。正如我们上面讨论的那样，这种移动可以通过 `move` 效果来实现。
+So now we can think about the algorithm of the bubble movement effect. As we talked above, this movement can be implemented by the `move` effect.
 
-首先，新的付费留言会在屏幕底部出现，所以初始 `y` 位置是 `resolution_y - font_size * 2`（我们应该为礼物弹幕保留一些空间，我将在下一节介绍它们）。付费留言的出现位置将是初始 `y` + 消息框高度。
+First of all, the new superchat will appear in the bottom of the screen, so the initial `y` position is the `resolution_y - font_size * 2` (We should reserve some space for the gift danmaku, I will introduce them in the next section). And the show up position will be the initial `y` + the message box height.
 
-然后，新的付费留言如何影响其他仍然存在的付费留言？在特定时间点，其他付费留言会向上移动新的付费留言高度。所以移动参数将是 `current_y` 到 `current_y - new_superchat_height`。
+Then, how will the new superchat effect other still alive superchat? At the timespot, others will move up the new superchat height as well. So the move parameter will be like from `current_y` to `current_y - new_superchat_height`. 
 
-如果存在一个特定的付费留言消失，那么比它更早的付费留言将向下移动付费留言高度。所以移动参数将是 `current_y` 到 `current_y + disappear_superchat_height`。然后一切都变得有意义了。
+And if there is a specific superchat disappear, the superchat eariler than it will move down the superchat height. So the move parameter will be like from `current_y` to `current_y + disappear_superchat_height`. Then everything makes sense.
 
-然后我们应该思考，什么时候开始移动？会有很多解决方案，但我认为在付费留言改变位置的时间点开始移动是最好的选择。并使移动持续一段时间，比如 0.2 秒。
+Then we should think about, when should we start the movement? There will be many solutions, but I think add it at the change position time of the superchat is the best choice. And make the movement a specific duration, like 0.2 second. 
 
-所以过程将是：
-- 改变位置时间 + 0.2s: 使付费留言移动效果。
-- 改变位置时间 + 0.2s ~ 下一个改变位置时间: 使付费留言 pos 效果。
+So the process will be:
+- change position time + 0.2s: make the superchat move effect.
+- change position time + 0.2s ~ next change position time: make the superchat pos effect.
 
-你可以参考源码中的 `superchat.py` 文件，了解具体的实现。
+You can check the `superchat.py` for more details.
 
-### 礼物和舰长弹幕
+### Gift and guard danmaku
 
-#### 文件结构
+#### File structure
 
-XML 文件如下：
+The xml file is as follows:
 
 ```xml
     <!-->gift danmaku<-->
@@ -633,39 +651,40 @@ XML 文件如下：
     level="{level}"/>
 ```
 
-ASS 文件如下：
+The ass file is as follows:
 
 ```ass
 Format: Layer,     Start,       End,      Style, Name, MarginL, MarginR, MarginV, Effect, Text
 Dialogue:   0,0:00:00.20,0:00:02.00,message_box,     ,    0000,    0000,    0000,,{\pos(0,1242)}{\c&H1C7795\b1}{username}:{\c&H1C7795\b0} 粉丝团灯牌 x1
 ```
 
-设置图层为 0，开始时间为 xml 中的 `time`，结束时间为 `time` + 持续时间，样式为 `message_box`，名称留空，左边距为 0000，右边距为 0000，上下边距为 0000，效果为 `\pos` 或 `\move`，文本为礼物消息。`\move` 和 `\pos` 与上面相同。`b1` 和 `b0` 是字体粗体的开始和结束，`&H1C7795` 是字体颜色。
+Set Layer to 0, Start to `time` in xml, End `time` +  duration time, Style to `message_box`, Name to empty, MarginL to 0000, MarginR to 0000, MarginV to 0000, Effect to `\pos` or `\move`, Text to the gift message. `\move` and  `\pos` are same as above. `b1` and `b0` are the start and end of the font bold, `&H1C7795` is the font color.
 
-#### 礼物和舰长弹幕显示算法
+#### Gift and Guard Danmaku Display Algorithm
 
-礼物弹幕和舰队弹幕会放在一个盒子范围内显示，盒子的高度为两个字体大小。礼物和舰长弹幕从下往上滚动，超出个数会将最早的弹幕向上移除。
+Gift and guard danmaku will be displayed in a box range, the height of the box is two font sizes. Gift and guard danmaku will scroll from bottom to top, and the earliest danmaku will be removed when the number of danmaku exceeds the limit.
 
-解析xml，将xml中包含"gift"、"guard"的部分找到，信息存储到gift_list中。根据这些信息计算礼物的显示时间和位置并输出ass文件。
+First, parse the xml, find the part that contains "gift" and "guard", and store the information in `gift_list`. Then, calculate the display time and position of the gift and output the ass file according to these information.
 
-需要注意的地方有：
+The key points to note are:
 
-1. 合并相邻的相同弹幕
-   - 将所有`gift`按照出现时间排升序。然后将`gift_list`中相邻的相同弹幕合并。
-   - 相邻的相同弹幕的定义为：同一用户、同一礼物、相邻时间不超过`mrege_interval`(默认5s,可配置)。合并后的开始时间是最早弹幕的开始时间，结束时间是最晚弹幕的结束时间。
+1. Merge adjacent same danmaku
+   - Sort all `gift` by appearance time in ascending order. Then merge the adjacent same danmaku in `gift_list`.
+   - The definition of adjacent same danmaku is: the same user, the same gift, and the adjacent time is not more than `mrege_interval`(default 5s, configurable). The start time of the merged danmaku is the start time of the earliest danmaku, and the end time is the end time of the latest danmaku.
 
-2. 处理相同时间的不同弹幕
-   - 由于不同用户的弹幕开始时间可能会相同，导致显示冲突，因此需要调整弹幕的时间以避免冲突。
-   - 按时间顺序遍历所有弹幕，若发现某个礼物弹幕的开始时间与上一个相同或更早，则将该弹幕的开始时间后延，结束时间也相应后延。后延到最大个数结束。
-   - 需要注意的点是：由于相邻礼物弹幕的时间间隔最小是1s,所以后延的弹幕个数乘以后延的时间不能超过1s。
+2. Handle different danmaku with the same time
+   - Since the start time of danmaku from different users may be the same, which will cause display conflicts, so we need to adjust the time of the danmaku to avoid conflicts.
+   - Traverse all danmaku in chronological order. If the start time of a gift danmaku is the same as or earlier than the previous one, then delay the start time of the danmaku and the end time correspondingly. Delay until the maximum number of danmaku is reached.
+   - Note that: since the minimum time interval of adjacent gift danmaku is 1s, so the number of delayed danmaku multiplied by the delay time cannot exceed 1s.
 
-3. 处理礼物弹幕的显示时间和位置
-   - 在输出时，礼物弹幕的显示时间和位置需要根据`/pos`的结束时间来调整，但若在最终结束时间前有新的弹幕加入，则`/pos`需提前结束。
-   - 为了实现这一调整，我们在该弹幕即将结束前，检查后续是否有弹幕的开始时间早于当前礼物弹幕的结束时间。如果有，则将当前礼物弹幕的结束时间提前到该弹幕的开始时间。
-   - 使用一个活跃弹幕列表 `active_danmaku_list` 来记录当前正在显示的弹幕。列表长度不应超过设定的最大弹幕显示个数。当列表长度超过限制时，应删除最早的弹幕。
+3. Handle the display time and position of gift danmaku
+   - When outputting, the display time and position of gift danmaku need to be adjusted according to the end time of `\pos`, but if there is a new danmaku joining in the final end time, then `\pos` needs to end earlier.
+   - To achieve this adjustment, we check whether there is a danmaku with a start time earlier than the end time of the current gift danmaku in the final end time. If there is, then we will advance the end time of the current gift danmaku to the start time of the next danmaku.
+   - Use an active danmaku list `active_danmaku_list` to record the current danmaku that is being displayed. The length of the list should not exceed the maximum number of danmaku that is set. When the list length exceeds the limit, the earliest danmaku should be deleted.
   
-4. 弹幕的显示和移动过渡
-    - 弹幕移动过渡：在每个`/pos()`前预留一段过渡时间，用于从上一个位置平滑过渡到当前`/pos()`位置。该过渡时间可以进行配置。
-    - 对于超出显示范围的弹幕，在移出时需要添加一个蒙版`\clip()`，使得弹幕只显示蒙版内的内容。蒙版的高度应等于显示盒子的高度，或者两个字体的高度。
+4. Danmaku display and movement transition
+   - Danmaku movement transition: leave a transition time before each `\pos()`, for smooth transition from the previous position to the current `\pos()` position. This transition time can be configured.
+   - For danmaku that exceeds the display range, add a mask `\clip()` when it is removed, so that the danmaku only displays the content within the mask. The height of the mask should be equal to the display box height, or twice the font size.
 
 ## Reference
+
