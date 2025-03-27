@@ -375,9 +375,7 @@ settings-production.toml
 
 # Ignore the cookies.json
 *.ass
-*.mp4
 *.jsonl
-*.xml
 !sample.xml
 DanmakuFactory
 dist/*
