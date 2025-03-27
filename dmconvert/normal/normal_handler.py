@@ -21,7 +21,7 @@ def get_position_y(font_size, appear_time, text_length, resolution_x, roll_time,
         # The initial difference length
         delta_x = (appear_time - previous_appear_time) * previous_velocity - (
             previous_length + text_length
-        ) * 1.5
+        ) / 2
         # If the initial difference length is negative, which means overlapped. Skip.
         if delta_x < 0:
             continue

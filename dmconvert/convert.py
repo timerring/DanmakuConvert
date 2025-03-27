@@ -27,5 +27,5 @@ def convert_xml_to_ass(font_size, resolution_x, resolution_y, xml_file, ass_file
 
 if __name__ == "__main__":
     xml_file = "sample.xml"
-    ass_file = "converted.ass"
+    ass_file = "sample.ass"
     convert_xml_to_ass(38, 720, 1280, xml_file, ass_file)

@@ -12,38 +12,16 @@ def format_time(seconds):
     return f"{hours}:{minutes:02d}:{seconds:02d}.{centiseconds:02d}"
 
 
-def is_utf8(s):
-    try:
-        s.decode("utf-8")
-        return True
-    except UnicodeDecodeError:
-        return False
-
-
-def get_str_len(s, fontSizeSet):
-    if s is None:
-        return -1
-
-    if isinstance(s, bytes):
-        str_bytes = s
-    else:
-        str_bytes = s.encode("utf-8")
-
-    if is_utf8(str_bytes):
-        cnt = 0
-        index = 0
-        while index < len(str_bytes):
-            byte = str_bytes[index]
-            if byte >= 0xC0:
-                cnt += 1
-            elif byte < 0x80:
-                cnt += 1
-            index += 1
-    else:
-        cnt = len(str_bytes)
-
-    len_result = cnt * int((fontSizeSet) / 1.2)
-    return len_result
+def get_str_len(text, fontSizeSet):
+    width = 0
+    for char in text:
+        if ord(char) > 0x2E80: # chinese char
+            width += 2
+        elif char in '[](){}「」【】《》':
+            width += 2
+        else:
+            width += 1
+    return width * (fontSizeSet/2)
 
 
 def get_color(price):
