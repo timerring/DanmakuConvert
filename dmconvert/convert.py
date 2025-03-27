@@ -4,11 +4,11 @@ import re
 import math
 import xml.etree.ElementTree as ET
 from .utils import format_time, get_str_len, get_color
-from dmconvert.normal.normal_handler import draw_normal_danmaku
-from dmconvert.guardgift.gg_handler import draw_gift_and_guard
-from dmconvert.superchat.superchat_handler import draw_superchat
-from dmconvert.normal.danmaku_array import DanmakuArray
-from dmconvert.header.header import draw_ass_header
+from .normal.normal_handler import draw_normal_danmaku
+from .guardgift.gg_handler import draw_gift_and_guard
+from .superchat.superchat_handler import draw_superchat
+from .normal.danmaku_array import DanmakuArray
+from .header.header import draw_ass_header
 
 
 def convert_xml_to_ass(font_size, sc_font_size, resolution_x, resolution_y, xml_file, ass_file):
