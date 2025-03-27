@@ -19,7 +19,7 @@ class SuperChat:
         msg_box_position_y=0,
         msg_space_x=450,
         msg_space_y=1080,
-        sc_font_size=38,
+        sc_font_size=30,
         move_time=0.2,
     ):
         """
@@ -51,7 +51,7 @@ class SuperChat:
             upper_box_color (str): the color of the upper box
         """
         top_box_height = math.ceil(
-            self.sc_font_size + self.sc_font_size * (4.0 / 5.0) + self.radius / 2
+            self.sc_font_size + int(self.sc_font_size * 0.8)
         )
         upper_box = (
             f"Dialogue: 0,{start_time},{end_time},message_box,,0000,0000,0000,,{{{effect}{upper_box_color}\\p1\\bord0\\shad0}}m 0 {self.radius} "  # start point
@@ -138,16 +138,16 @@ class SuperChat:
 
         upper_box_position_y = self.position_y
         user_name_position_y = upper_box_position_y + int(self.sc_font_size / 6)
-        superchat_price_position_y = user_name_position_y + self.sc_font_size
-        lower_box_position_y = self.position_y + math.ceil(
-            self.sc_font_size + self.sc_font_size * (4.0 / 5.0) + self.radius / 2
+        superchat_price_position_y = user_name_position_y + int(self.sc_font_size * 0.8)
+        lower_box_position_y = upper_box_position_y + math.ceil(
+            self.sc_font_size + int(self.sc_font_size * 0.8) # top_box_height
         )
 
         pre_upper_box_position_y = self.previous_y
         pre_user_name_position_y = pre_upper_box_position_y + int(self.sc_font_size / 6)
-        pre_superchat_price_position_y = pre_user_name_position_y + self.sc_font_size
+        pre_superchat_price_position_y = pre_user_name_position_y + int(self.sc_font_size * 0.8)
         pre_lower_box_position_y = pre_upper_box_position_y + math.ceil(
-            self.sc_font_size + self.sc_font_size * (4.0 / 5.0) + self.radius / 2
+            self.sc_font_size + int(self.sc_font_size * 0.8) # top_box_height
         )
 
         effect_upper_box_move = (
