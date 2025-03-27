@@ -21,8 +21,7 @@ def get_text_line_num(text):
 
 
 def get_sc_height(line_num, sc_font_size):
-    radius = sc_font_size / 2
-    top_box_height = math.ceil(sc_font_size + int(sc_font_size * 0.8))
+    top_box_height = sc_font_size * 1.8
     btm_box_height = math.ceil(line_num * sc_font_size)
     sc_height = btm_box_height + top_box_height
     return sc_height, top_box_height, btm_box_height
@@ -151,6 +150,7 @@ def render_superchat(ass_file, font_size, resolution_y, data):
                     current_y,
                     previous_y,
                     text,
+                    font_size,
                 ).write_superchat(ass_file)
                 previous_y = current_y
                 if delta_y[0] == "-":
@@ -169,4 +169,5 @@ def render_superchat(ass_file, font_size, resolution_y, data):
             current_y,
             previous_y,
             text,
+            font_size,
         ).write_superchat(ass_file)
