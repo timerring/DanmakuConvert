@@ -91,7 +91,7 @@ def draw_normal_danmaku(
             start_time = format_time(appear_time)
 
             # Format text
-            text = remove_emojis(d.text)
+            text = remove_emojis(d.text, ".")
 
             # For rolling danmakus (most common type)
             if danmaku_type == 1:
