@@ -165,7 +165,7 @@ def cal_move(dm_list):
 
     for m in sorted_move:
         print(m.text, m.start_time, m.end_time, m.row)
-    return sorted_move
+    return sorted_move , active_danmaku , last_time
 
 def draw_move(move, video_width, video_height, font_size):
     lines = ""
@@ -189,6 +189,20 @@ def draw_move(move, video_width, video_height, font_size):
         
     return lines
 
+def draw_pos(start_time, active_danmaku, video_width, video_height, font_size):
+    lines = ""
+    start_time = format_time(start_time)
+
+    for d in active_danmaku:
+        text = d.text
+        end_time = video_end_time
+        row = d.current_row
+        effect = f"\\pos({0},{video_height-(row)*font_size})"
+        end_time = format_time(end_time)
+
+        lines += f"Dialogue: {0},{start_time},{end_time},message_box,,0000,0000,0000,,{{{effect}}}{text}\n"
+    return lines
+
 def main():
     video_width = 720
     video_height = 1280
@@ -197,8 +211,10 @@ def main():
     dm_list = read_xml("sample.xml")
     for d in dm_list:
         print(d.user, d.text, d.appear_time)
-    move = cal_move(dm_list)
-    lines = draw_move(move, video_width, video_height, font_size)
+    move, active_danmaku, last_time = cal_move(dm_list)
+    lines = ""
+    lines += draw_move(move, video_width, video_height, font_size)
+    lines += draw_pos(last_time, active_danmaku, video_width, video_height, font_size)
     draw_ass_header("dytest.ass", 720, 1280, font_size, font_size)
     with open("dytest.ass", "a", encoding="utf-8") as f:
         f.write(lines)
