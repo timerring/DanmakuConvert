@@ -18,7 +18,6 @@ class SuperChat:
         sc_font_size,
         msg_box_position_x=10,
         msg_box_position_y=0,
-        msg_space_x=450,
         msg_space_y=1080,
         move_time=0.2,
     ):
@@ -28,7 +27,7 @@ class SuperChat:
         """
         self.msg_box_position_x = msg_box_position_x
         self.msg_box_position_y = msg_box_position_y
-        self.msg_space_x = msg_space_x
+        self.msg_space_x = sc_font_size * 12
         self.msg_space_y = msg_space_y
         self.sc_font_size = sc_font_size
         self.radius = int(sc_font_size / 2)
