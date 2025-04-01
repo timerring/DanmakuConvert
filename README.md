@@ -25,7 +25,9 @@
 
 ## 成果展示
 
-![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-31-23-27-09.png)
+
+支持各种分辨率的渲染，例如从左往右依次是常见的 720x1280, 1080x1920, 1920x1080, 1280x720 分辨率的渲染效果图。
 
 ## 安装
 
