@@ -29,7 +29,7 @@ The python implementation of the [DanmakuFactory](https://github.com/hihkm/Danma
 
 ![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-31-23-27-09.png)
 
-Supports rendering at various resolutions, with example images from left to right showing common resolutions of 720x1280, 1080x1920, 1920x1080, and 1280x720.
+Supports rendering at various resolutions, with example images from left to right showing common resolutions of 720x1280, 1080x1920, 1920x1080, and 1280x720. （You can adjust the font size of danmaku and superchat, and the size of the rendering box）
 
 ## Installation
 
