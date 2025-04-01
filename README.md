@@ -69,7 +69,7 @@ dmconvert -h
 ### 直接引用
 
 ```python
-from dmconvert.convert import convert_xml_to_ass
+from dmconvert import convert_xml_to_ass
 
 # 例如
 # xml_file = "sample.xml"

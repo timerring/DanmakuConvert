@@ -71,7 +71,7 @@ dmconvert -h
 ### Source Version
 
 ```python
-from dmconvert.convert import convert_xml_to_ass
+from dmconvert import convert_xml_to_ass
 
 # eg.
 # xml_file = "sample.xml"
