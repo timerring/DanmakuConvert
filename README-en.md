@@ -14,20 +14,22 @@ The python implementation of the [DanmakuFactory](https://github.com/hihkm/Danma
 
 ## Features
 
-- Convert XML danmaku to ASS danmaku.
+- Converts XML danmaku to ASS danmaku.
 - More efficient arrangement of danmaku. See the [issue](https://github.com/hihkm/DanmakuFactory/issues/104#issuecomment-2716857788).
-- Remove the abundant emojis which [cannot be rendered by ffmpeg](https://trac.ffmpeg.org/ticket/5777).
-- Dynamically adjust the size of superchat according to different resolutions.
-- Support different font sizes and superchat font sizes.
-- Support different colors of superchat and time distinction.
-- Support different OS, implemented by Python.
+- Removes abundant emojis which [cannot be rendered by ffmpeg](https://trac.ffmpeg.org/ticket/5777).
+- Supports different font sizes and superchat font sizes (dynamically adjusts the superchat box size based on the superchat font size).
+- Adapts to different resolutions with responsive layouts.
+- Supports different colors of superchat and time distinction.
+- Supports different OS, implemented by Python.
 - No third-party libraries. No need to consider the compatibility between dependencies.
-- Support mobile native live room rendering(Work In Progress).
+- Supports mobile native live room rendering(dev).
 - More features will be added in the future, if you have any suggestions, welcome to [open an issue](https://github.com/timerring/DanmakuConvert/issues).
 
 ## The result display
 
-![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-23-15-38-54.jpg)
+![](https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-03-31-23-27-09.png)
+
+Supports rendering at various resolutions, with example images from left to right showing common resolutions of 720x1280, 1080x1920, 1920x1080, and 1280x720.
 
 ## Installation
 
