@@ -13,7 +13,7 @@ from .header.header import draw_ass_header
 
 def convert_xml_to_ass(font_size, sc_font_size, resolution_x, resolution_y, xml_file, ass_file):
     # Parse XML
-    print("DanmakuConvert v0.0.3", flush=True)
+    print("DanmakuConvert v0.0.4", flush=True)
     print("https://github.com/timerring/DanmakuConvert", flush=True)
     tree = ET.parse(xml_file)
     root = tree.getroot()

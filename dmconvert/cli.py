@@ -26,7 +26,7 @@ def cli():
         "-V",
         "--version",
         action="version",
-        version="dmconvert 0.0.3 and source code at https://github.com/timerring/DanmakuConvert",
+        version="dmconvert 0.0.4 and source code at https://github.com/timerring/DanmakuConvert",
         help="Print version information",
     )
     parser.add_argument(

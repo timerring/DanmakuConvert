@@ -20,7 +20,7 @@
 - 支持不同金额的 superchat 颜色及时间区分。
 - 支持不同操作系统，通过Python实现跨平台。
 - 没有任何第三方依赖库，无需考虑版本兼容(Python >= 3.6)。
-- 支持移动端原生直播间渲染(dev)。
+- 支持移动端原生直播间渲染(testing)。
 - 未来将添加更多功能，如果您有任何优化或者改进建议，欢迎 [提交 issue](https://github.com/timerring/DanmakuConvert/issues)。
 
 ## 成果展示

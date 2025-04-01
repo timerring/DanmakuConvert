@@ -22,7 +22,7 @@ The python implementation of the [DanmakuFactory](https://github.com/hihkm/Danma
 - Supports different colors of superchat and time distinction.
 - Supports different OS, implemented by Python.
 - No third-party libraries. No need to consider the compatibility between dependencies.
-- Supports mobile native live room rendering(dev).
+- Supports mobile native live room rendering(testing).
 - More features will be added in the future, if you have any suggestions, welcome to [open an issue](https://github.com/timerring/DanmakuConvert/issues).
 
 ## The result display
