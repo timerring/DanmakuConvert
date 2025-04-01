@@ -155,7 +155,7 @@ class SuperChat:
         )
         effect_superchat_msg_move = f"\\move(20,{pre_lower_box_position_y},20,{lower_box_position_y})"
 
-        with open(ass_path, "a") as f:
+        with open(ass_path, "a", encoding="utf-8") as f:
             f.write(
                 self.draw_upper_box(
                     upper_box_color,
@@ -202,7 +202,7 @@ class SuperChat:
         effect_lower_box_position = f"\\pos(10,{lower_box_position_y})"
         effect_superchat_msg_position = f"\\pos(20,{lower_box_position_y})"
 
-        with open(ass_path, "a") as f:
+        with open(ass_path, "a", encoding="utf-8") as f:
             f.write(
                 self.draw_upper_box(
                     upper_box_color,
