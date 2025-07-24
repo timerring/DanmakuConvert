@@ -12,8 +12,8 @@ from .header.header import draw_ass_header
 
 
 def convert_xml_to_ass(
-    font_size, sc_font_size, resolution_x, resolution_y, roll_time, fix_time, xml_file, ass_file
-):
+    font_name, font_size, sc_font_size, resolution_x, resolution_y, displayarea, roll_time, fix_time, 
+    opacity, bold, outline, shadow, xml_file, ass_file):
     # Parse XML
     print("DanmakuConvert v0.0.4", flush=True)
     print("https://github.com/timerring/DanmakuConvert", flush=True)
@@ -21,9 +21,10 @@ def convert_xml_to_ass(
     root = tree.getroot()
     roll_array = DanmakuArray(resolution_x, resolution_y)
     top_array = DanmakuArray(resolution_x, resolution_y)
-    draw_ass_header(ass_file, resolution_x, resolution_y, font_size, sc_font_size)
+    draw_ass_header(ass_file, resolution_x, resolution_y, font_name, font_size, sc_font_size, opacity,
+                    bold, outline, shadow)
     draw_normal_danmaku(
-        ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y,
+        ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y, displayarea,
     roll_time, fix_time)
     draw_gift_and_guard(ass_file, root, sc_font_size, resolution_y)
     draw_superchat(ass_file, sc_font_size, resolution_y, root)
@@ -33,4 +34,4 @@ def convert_xml_to_ass(
 if __name__ == "__main__":
     xml_file = "sample.xml"
     ass_file = "sample.ass"
-    convert_xml_to_ass(38, 38, 720, 1280, 12, 5, xml_file, ass_file)
+    convert_xml_to_ass("Microsoft YaHei", 38, 38, 720, 1280, 1.0, 12, 5, 0.8, 0, 1.0, 0.0, xml_file, ass_file)

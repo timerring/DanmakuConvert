@@ -75,7 +75,7 @@ def get_fixed_y(font_size, appear_time, resolution_y, fix_time, array, from_top=
 
 def draw_normal_danmaku(
     ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y,
-    roll_time, fix_time):
+    displayarea, roll_time, fix_time):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert each danmaku
         all_normal_danmaku = root.findall(".//d")
@@ -120,7 +120,7 @@ def draw_normal_danmaku(
                     roll_time,
                     roll_array,
                 )
-                if y:
+                if y and y <= resolution_y * displayarea:
                     effect = f"\\move({x1},{y},{x2},{y})"
 
             # For TOP danmakus
@@ -137,7 +137,7 @@ def draw_normal_danmaku(
                     top_array,
                     True,
                 )
-                if y:
+                if y and y <= resolution_y * displayarea:
                     effect = f"\\pos({x},{y})"
 
             # For BTM danmakus
@@ -154,7 +154,7 @@ def draw_normal_danmaku(
                     top_array,
                     False,
                 )
-                if y:
+                if y and y <= resolution_y * displayarea:
                     effect = f"\\pos({x},{y})"
 
             if effect:
