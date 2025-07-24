@@ -20,10 +20,10 @@ def convert_xml_to_ass(
     tree = ET.parse(xml_file)
     root = tree.getroot()
     roll_array = DanmakuArray(resolution_x, resolution_y)
-    btm_array = DanmakuArray(resolution_x, resolution_y)
+    top_array = DanmakuArray(resolution_x, resolution_y)
     draw_ass_header(ass_file, resolution_x, resolution_y, font_size, sc_font_size)
     draw_normal_danmaku(
-        ass_file, root, font_size, roll_array, btm_array, resolution_x, resolution_y
+        ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y
     )
     draw_gift_and_guard(ass_file, root, sc_font_size, resolution_y)
     draw_superchat(ass_file, sc_font_size, resolution_y, root)
