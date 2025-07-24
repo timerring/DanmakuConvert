@@ -31,10 +31,10 @@
 
 推荐一些常见渲染参数：
 
-- 720x1280 `dmconvert -f 38 -sf 30 -x 720 -y 1280 -i sample.xml -o output.ass`
-- 1280x720 `dmconvert -f 38 -sf 30 -x 1280 -y 720 -i sample.xml -o output.ass`
-- 1080x1920 `dmconvert -f 42 -sf 42 -x 1080 -y 1920 -i sample.xml -o output.ass`
-- 1920x1080 `dmconvert -f 42 -sf 42 -x 1920 -y 1080 -i sample.xml -o output.ass`
+- 720x1280 `dmconvert -f 38 -sf 30 -x 720 -y 1280 -r 12 -ft 5 -i sample.xml -o output.ass`
+- 1280x720 `dmconvert -f 38 -sf 30 -x 1280 -y 720 -r 12 -ft 5 -i sample.xml -o output.ass`
+- 1080x1920 `dmconvert -f 42 -sf 42 -x 1080 -y 1920 -r 12 -ft 5 -i sample.xml -o output.ass`
+- 1920x1080 `dmconvert -f 42 -sf 42 -x 1920 -y 1080 -r 12 -ft 5 -i sample.xml -o output.ass`
 
 ## 安装
 
@@ -65,12 +65,16 @@ dmconvert -h
 #                         The resolution x of the danmaku, default is 1920
 #   -y RESOLUTIONY, --resolutiony RESOLUTIONY
 #                         The resolution y of the danmaku, default is 1080
+#   -r ROLLTIME, --roll-time ROLLTIME
+#                         The show time of the rolling danmaku, default is 12
+#   -ft FIXTIME, --fix-time FIXTIME
+#                         The show time of the fix danmaku, default is 5
 #   -i XML, --xml XML     The input xml file
 #   -o ASS, --ass ASS     The output ass file
 
 # Example:
 # dmconvert -i input.xml -o output.ass
-# dmconvert -f 38 -sf 30 -x 1920 -y 1080 -i input.xml -o output.ass
+# dmconvert -f 38 -sf 30 -x 1920 -y 1080 -r 12 -ft 5 -i input.xml -o output.ass
 ```
 
 ### 直接引用

@@ -22,7 +22,7 @@ def cli():
             """
         Example:
         dmconvert -i input.xml -o output.ass
-        dmconvert -f 38 -sf 30 -x 1920 -y 1080 -i input.xml -o output.ass
+        dmconvert -f 38 -sf 30 -x 1920 -y 1080 -r 12 -ft 5 -i input.xml -o output.ass
         """
         ),
     )
@@ -62,6 +62,20 @@ def cli():
         help="The resolution y of the danmaku, default is 1080",
     )
     parser.add_argument(
+        "-r",
+        "--roll-time",
+        default=12,
+        type=int,
+        help="The show time of the rolling danmaku, default is 12"
+    )
+    parser.add_argument(
+        "-ft",
+        "--fix-time",
+        default=5,
+        type=int,
+        help="The show time of the fix danmaku, default is 5"
+    )
+    parser.add_argument(
         "-i", "--xml", required=True, type=str, help="The input xml file"
     )
     parser.add_argument("-o", "--ass", default="", type=str, help="The output ass file")
@@ -80,6 +94,8 @@ def cli():
             args.scfontsize,
             args.resolutionx,
             args.resolutiony,
+            args.roll_time,
+            args.fix_time,
             xml_file,
             ass_file,
         )

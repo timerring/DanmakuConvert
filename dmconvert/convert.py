@@ -12,7 +12,7 @@ from .header.header import draw_ass_header
 
 
 def convert_xml_to_ass(
-    font_size, sc_font_size, resolution_x, resolution_y, xml_file, ass_file
+    font_size, sc_font_size, resolution_x, resolution_y, roll_time, fix_time, xml_file, ass_file
 ):
     # Parse XML
     print("DanmakuConvert v0.0.4", flush=True)
@@ -23,8 +23,8 @@ def convert_xml_to_ass(
     top_array = DanmakuArray(resolution_x, resolution_y)
     draw_ass_header(ass_file, resolution_x, resolution_y, font_size, sc_font_size)
     draw_normal_danmaku(
-        ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y
-    )
+        ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y,
+    roll_time, fix_time)
     draw_gift_and_guard(ass_file, root, sc_font_size, resolution_y)
     draw_superchat(ass_file, sc_font_size, resolution_y, root)
     print(f"Convert {xml_file} to {ass_file} successfully.", flush=True)
@@ -33,4 +33,4 @@ def convert_xml_to_ass(
 if __name__ == "__main__":
     xml_file = "sample.xml"
     ass_file = "sample.ass"
-    convert_xml_to_ass(38, 38, 720, 1280, xml_file, ass_file)
+    convert_xml_to_ass(38, 38, 720, 1280, 12, 5, xml_file, ass_file)

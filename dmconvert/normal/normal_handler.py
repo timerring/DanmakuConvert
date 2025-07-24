@@ -74,8 +74,8 @@ def get_fixed_y(font_size, appear_time, resolution_y, fix_time, array, from_top=
     return None
 
 def draw_normal_danmaku(
-    ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y
-):
+    ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y,
+    roll_time, fix_time):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert each danmaku
         all_normal_danmaku = root.findall(".//d")
@@ -95,9 +95,6 @@ def draw_normal_danmaku(
             )
             color_hex = color_reverse[:-2].ljust(6, "0").upper()  # Remove 0x
             color_text = f"\\c&H{color_hex}"
-
-            roll_time = 12
-            fix_time = 5
 
             # Format times
             start_time = format_time(appear_time)
