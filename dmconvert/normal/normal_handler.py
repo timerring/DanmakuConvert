@@ -30,40 +30,52 @@ def get_position_y(font_size, appear_time, text_length, resolution_x, roll_time,
             return 1 + i * font_size
         delta_time = delta_x / delta_velocity
         bias = appear_time - previous_appear_time - delta_time
+        t_catch = previous_appear_time + delta_time
+        distance_prev = previous_velocity * (t_catch - previous_appear_time)
+        if distance_prev > resolution_x:
+            array.set_time_length(i, appear_time, text_length)
+            return 1 + i * font_size
         if bias > 0:
             array.set_time_length(i, appear_time, text_length)
             return 1 + i * font_size
-        else:
-            if bias > best_bias:
+        elif best_row == 0 or bias > best_bias:
                 best_bias = bias
                 best_row = i
-    return 1 + best_row * font_size
 
+    if best_row > 0:
+        array.set_time_length(best_row, appear_time, text_length)
+        return 1 + best_row * font_size
+    return None
 
-# Bottom danmaku algorithm
-def get_fixed_y(font_size, appear_time, resolution_y, array):
+# Top and Bottom danmaku algorithm
+def get_fixed_y(font_size, appear_time, resolution_y, fix_time, array, from_top=True):
     best_row = 0
     best_bias = -1
-    for i in range(array.rows):
-        previous_appear_time = array.get_time(i)
-        if previous_appear_time < 0:
-            array.set_time_length(i, appear_time, 0)
-            return resolution_y - font_size * (i + 1) + 1
-        else:
-            delta_time = appear_time - previous_appear_time
-            if delta_time > 5:
-                array.set_time_length(i, appear_time, 0)
-                return resolution_y - font_size * (i + 1) + 1
-            else:
-                if delta_time > best_bias:
-                    best_bias = delta_time
-                    best_row = i
-    return resolution_y - font_size * (best_row + 1) + 1
 
+    if from_top:
+        row_range = range(1, array.rows + 1)
+    else:
+        row_range = reversed(range(1, array.rows + 1))
+
+    for i in row_range:
+        row_index = i - 1
+        previous_appear_time = array.get_time(row_index)
+        delta_time = appear_time - previous_appear_time
+        if previous_appear_time < 0 or delta_time > fix_time:
+            array.set_time_length(row_index, appear_time, 0)
+            if from_top:
+                return row_index * font_size + 1
+            else:
+                return resolution_y - font_size * (array.rows - row_index) + 1
+        elif delta_time > best_bias:
+            best_bias = delta_time
+            best_row = row_index
+
+    return None
 
 def draw_normal_danmaku(
-    ass_file, root, font_size, roll_array, btm_array, resolution_x, resolution_y
-):
+    ass_file, root, font_size, roll_array, top_array, resolution_x, resolution_y,
+    displayarea, roll_time, fix_time):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert each danmaku
         all_normal_danmaku = root.findall(".//d")
@@ -83,9 +95,6 @@ def draw_normal_danmaku(
             )
             color_hex = color_reverse[:-2].ljust(6, "0").upper()  # Remove 0x
             color_text = f"\\c&H{color_hex}"
-
-            roll_time = 12
-            fix_time = 5
 
             # Format times
             start_time = format_time(appear_time)
@@ -111,16 +120,45 @@ def draw_normal_danmaku(
                     roll_time,
                     roll_array,
                 )
-                effect = f"\\move({x1},{y},{x2},{y})"
+                if y and y <= resolution_y * displayarea:
+                    effect = f"\\move({x1},{y},{x2},{y})"
+
+            # For TOP danmakus
+            elif danmaku_type == 5:
+                layer = 1
+                end_time = format_time(appear_time + fix_time)
+                style = "TOP"
+                x = int(resolution_x / 2)
+                y = get_fixed_y(
+                    font_size,
+                    appear_time,
+                    resolution_y,
+                    fix_time,
+                    top_array,
+                    True,
+                )
+                if y and y <= resolution_y * displayarea:
+                    effect = f"\\pos({x},{y})"
 
             # For BTM danmakus
-            else:
+            elif danmaku_type == 4:
                 layer = 1
                 end_time = format_time(appear_time + fix_time)
                 style = "BTM"
                 x = int(resolution_x / 2)
-                y = get_fixed_y(font_size, appear_time, resolution_y, btm_array)
-                effect = f"\\pos({x},{y})"
+                y = get_fixed_y(
+                    font_size,
+                    appear_time,
+                    resolution_y,
+                    fix_time,
+                    top_array,
+                    False,
+                )
+                if y and y <= resolution_y * displayarea:
+                    effect = f"\\pos({x},{y})"
 
-            line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect}}}{{{color_text}}}{text}\n"
+            if effect:
+                line = f"Dialogue: {layer},{start_time},{end_time},{style},,0000,0000,0000,,{{{effect}}}{{{color_text}}}{text}\n"
+            else:
+                line = f"Comment: {layer},{start_time},{start_time},{style},,0000,0000,0000,,{{{color_text}}}{text}\n"
             f.write(line)
