@@ -87,7 +87,7 @@ dmconvert -h
 
 # Example:
 # dmconvert -i input.xml -o output.ass
-# mconvert -fn "Microsoft YaHei" -f 38 -sf 30 -x 1920 -y 1080 -d 1.0 -r 12 -ft 5 -a 0.8 -b 1 -ol 1.0 -sh 0.0 -i input.xml -o output.ass
+# dmconvert -fn "Microsoft YaHei" -f 38 -sf 30 -x 1920 -y 1080 -d 1.0 -r 12 -ft 5 -a 0.8 -b 1 -ol 1.0 -sh 0.0 -i input.xml -o output.ass
 ```
 
 ### Source Version
