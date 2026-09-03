@@ -15,7 +15,7 @@ def convert_xml_to_ass(
     font_name, font_size, sc_font_size, resolution_x, resolution_y, displayarea, roll_time, fix_time, 
     opacity, bold, outline, shadow, xml_file, ass_file):
     # Parse XML
-    print("DanmakuConvert v0.0.4", flush=True)
+    print("DanmakuConvert v0.0.5", flush=True)
     print("https://github.com/timerring/DanmakuConvert", flush=True)
     tree = ET.parse(xml_file)
     root = tree.getroot()
