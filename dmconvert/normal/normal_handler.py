@@ -78,14 +78,23 @@ def draw_normal_danmaku(
     displayarea, roll_time, fix_time):
     with open(ass_file, "a", encoding="utf-8") as f:
         # Convert each danmaku
-        all_normal_danmaku = root.findall(".//d")
+        # Track state only describes the most recently allocated danmaku, so
+        # allocation must run in chronological order (preserving ties).
+        all_normal_danmaku = sorted(
+            root.findall(".//d"), key=lambda d: float(d.get("p").split(",")[0])
+        )
         danmaku_count = len(all_normal_danmaku)
         print(f"The normal danmaku pool is {danmaku_count}.", flush=True)
         for d in all_normal_danmaku:
+            # A full track or an out-of-area position must not reuse the
+            # previous danmaku's movement/position override.
+            effect = None
             # Parse attributes
             p_attrs = d.get("p").split(",")
             appear_time = float(p_attrs[0])
             danmaku_type = int(p_attrs[1])
+            if danmaku_type not in (1, 4, 5):
+                continue
 
             # Convert color from decimal to hex
             color = int(p_attrs[3])

@@ -19,8 +19,8 @@ def convert_xml_to_ass(
     print("https://github.com/timerring/DanmakuConvert", flush=True)
     tree = ET.parse(xml_file)
     root = tree.getroot()
-    roll_array = DanmakuArray(resolution_x, resolution_y)
-    top_array = DanmakuArray(resolution_x, resolution_y)
+    roll_array = DanmakuArray(resolution_x, resolution_y, font_size)
+    top_array = DanmakuArray(resolution_x, resolution_y, font_size)
     draw_ass_header(ass_file, resolution_x, resolution_y, font_name, font_size, sc_font_size, opacity,
                     bold, outline, shadow)
     draw_normal_danmaku(
